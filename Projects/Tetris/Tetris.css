@@ -1,0 +1,85 @@
+body {
+  background-color: #f0f0f0;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  background-color: #000;
+  border: 2px solid #fff;
+  display: block;
+  margin: 0 auto;
+}
+
+.popup {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  background: #fff;
+  padding: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+  color: #000;
+}
+
+.popup.game-over {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222;
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.popup.name-entry {
+  top: 30%;
+  transform: translate(-50%, -30%);
+  background-color: #fff;
+  color: #000;
+  border-color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: white;
+}
+
+#leaderboard {
+  margin: 20px auto;
+  width: fit-content;
+  background: #fff;
+  padding: 10px;
+  border: 2px solid #333;
+}
+
+#leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#leaderboard th {
+  background-color: #333;
+  color: white;
+}
+
+#leaderboard td,
+#leaderboard th {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ccc;
+}

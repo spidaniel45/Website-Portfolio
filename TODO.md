@@ -1,0 +1,7 @@
+- Fix form input names to match PHP variables (remove spaces)
+- Change input types to "text"
+- Fix PHP variable access for LastName (add underscore)
+- Correct variable cases in bind_param
+- Add name="Submit" to submit button
+- Remove duplicate method in form
+- Add success message after insert
