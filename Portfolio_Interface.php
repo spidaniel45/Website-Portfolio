@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
 <head>
     <link rel="stylesheet" href="Portfolio_Design.css">
     <meta charset="UTF-8">
@@ -100,9 +100,7 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
   $result = $conn->query($sql);
   $fullName = ($result && $result->num_rows > 0) ? $result->fetch_assoc()['FullName'] : "Daniel C. Evangelista";
   ?>
-  
   <img src="Profile.jpg" alt="Profile Picture" class="circle-pic">
-  
   <div class="profile-info">
     <h2><?= htmlspecialchars($fullName) ?></h2>
     <div class="social-icons">
@@ -110,10 +108,11 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
       <a href="https://www.linkedin.com/in/daniel-c-evangelista-729793389/" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a>
       <a href="mailto:daniellora583@gmail.com"><ion-icon name="mail-outline"></ion-icon></a>
       <a href="tel:+639XXXXXXXXX"><ion-icon name="call-outline"></ion-icon></a>
-      <button id="ViewDocumentsButton" class="action-button">View my Documents</button>
     </div>
   </div>
 </div>
+
+<button id="ViewDocumentsButton" class="action-button">View my Documents</button>
 
 <div class="About_Info">
     <h3>About Me</h3>
