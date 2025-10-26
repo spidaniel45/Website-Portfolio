@@ -85,12 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
 if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
     $uploaded = intval($_GET['uploaded'] ?? 0);
     $skipped = intval($_GET['skipped'] ?? 0);
-    $message = "✅ Uploaded: $uploaded file(s). ⚠️ Skipped: $skipped duplicate(s).";
+    $message = "Uploaded: $uploaded file(s). Skipped: $skipped duplicate(s).";
 }
 
 ?>
 
-<!-- Left Sidebar Profile -->
 <div class="Header">
   <?php
   $sql = "SELECT CONCAT(First_Name, ' ', Middle_Name, ' ', Last_Name) AS FullName FROM Portfolio_Profile LIMIT 1";
@@ -117,14 +116,12 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
   </div>
 </div>
 
-<!-- Upload Info (Top Right) -->
 <div class="Upload_Info">
     <h3>Upload</h3>
     <p>You can upload one document to your portfolio.</p>
     <button id="OpenUploadModalButton" class="action-button">Upload Document</button>
 </div>
 
-<!-- Main Content Area -->
 <div class="main-content">
     <?php if ($message): ?>
         <div class="Message_Info"><?= htmlspecialchars($message) ?></div>
@@ -143,41 +140,12 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
       </details>
     </div>
 
-    <!-- Option 1: Simple text link with styling -->
-<a href="https://github.com/spidaniel45?tab=repositories" target="_blank" style="display: inline-block; padding: 10px 20px; background: #24292e; color: white; text-decoration: none; border-radius: 6px;">
-  View My GitHub Repositories
-</a>
 
-<!-- Option 2: Link to a specific repository with a generated card -->
-<a href="https://github.com/spidaniel45/your-repo-name" target="_blank">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=spidaniel45&repo=your-repo-name&theme=dark" alt="Repository Card">
-</a>
-
-<!-- Option 3: Show your GitHub stats -->
-<a href="https://github.com/spidaniel45" target="_blank">
+<a href="https://github.com/spidaniel45?tab=repositories" target="_blank">
   <img src="https://github-readme-stats.vercel.app/api?username=spidaniel45&show_icons=true&theme=dark" alt="GitHub Stats">
 </a>
 
-<!-- Option 4: Display multiple repos dynamically with JavaScript -->
-<div id="github-repos"></div>
-<script>
-  fetch('https://api.github.com/users/spidaniel45/repos?sort=updated&per_page=6')
-    .then(response => response.json())
-    .then(repos => {
-      const container = document.getElementById('github-repos');
-      repos.forEach(repo => {
-        container.innerHTML += `
-          <div style="border: 1px solid #ddd; padding: 15px; margin: 10px; border-radius: 8px;">
-            <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-            <p>${repo.description || 'No description'}</p>
-            <small>⭐ ${repo.stargazers_count} | 🍴 ${repo.forks_count}</small>
-          </div>
-        `;
-      });
-    });
-</script>
-
-    <button id="ViewDocumentsButton" class="action-button">View my Documents</button>
+<button id="ViewDocumentsButton" class="action-button">View my Documents</button>
 
     <form action="Upload_Project.php" method="POST" enctype="multipart/form-data">
         <h3>Add New Project</h3>
@@ -212,7 +180,6 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
     </div>
 </div>
 
-<!-- Download Modal -->
 <div id="DownloadModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -244,7 +211,6 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
     </div>
 </div>
 
-<!-- Upload Modal -->
 <div id="UploadModal" class="modal">
     <div class="modal-content">
         <span class="close-upload">&times;</span>
