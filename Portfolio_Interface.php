@@ -10,6 +10,7 @@
 
 <?php
 $conn = new mysqli("localhost", "root", "", "Portfolio_Daniel");
+
 if ($conn->connect_error) {
     die("Connection Failed: " . $conn->connect_error);
 }
@@ -18,28 +19,32 @@ $message = "";
 
 if (isset($_GET['delete'])) {
     $fileToDelete = $_GET['delete'];
+    
     $stmt = $conn->prepare("SELECT File_Path FROM Portfolio_Documents WHERE File_Name = ?");
-    $stmt->bind_param("s", $fileToDelete);
+    $stmt->bind_param("s", $fileToDelete); 
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result && $result->num_rows > 0) {
         $filePath = $result->fetch_assoc()['File_Path'];
+        
         if (file_exists($filePath)) {
-            unlink($filePath);
+            unlink($filePath); 
         }
+        
         $deleteStmt = $conn->prepare("DELETE FROM Portfolio_Documents WHERE File_Name = ?");
         $deleteStmt->bind_param("s", $fileToDelete);
         $deleteStmt->execute();
         $deleteStmt->close();
+        
         header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        exit(); 
     }
     $stmt->close();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
-    $files = $_FILES['document'];
+    $files = $_FILES['document']; 
     $targetDir = "uploads/";
 
     if (!is_dir($targetDir)) {
@@ -51,10 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
 
     for ($i = 0; $i < count($files['name']); $i++) {
         $fileName = str_replace(' ', '_', $files['name'][$i]);
-        $fileTmp = $files['tmp_name'][$i];
-        $fileError = $files['error'][$i];
-        $targetFile = $targetDir . basename($fileName);
+        $fileTmp = $files['tmp_name'][$i];      
+        $fileError = $files['error'][$i];     
+        $targetFile = $targetDir . basename($fileName); 
 
+        // Check if file uploaded without errors
         if ($fileError === UPLOAD_ERR_OK) {
             $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM Portfolio_Documents WHERE File_Name = ?");
             $stmt->bind_param("s", $fileName);
@@ -65,9 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
 
             if ($exists || file_exists($targetFile)) {
                 $skipped++;
-                continue;
+                continue; 
             }
-
             if (move_uploaded_file($fileTmp, $targetFile)) {
                 $stmt = $conn->prepare("INSERT INTO Portfolio_Documents (File_Name, File_Path) VALUES (?, ?)");
                 $stmt->bind_param("ss", $fileName, $targetFile);
@@ -87,18 +92,24 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
     $skipped = intval($_GET['skipped'] ?? 0);
     $message = "Uploaded: $uploaded file(s). Skipped: $skipped duplicate(s).";
 }
-
 ?>
 
 <div class="Header">
   <?php
+  // Fetch user's full name from database
   $sql = "SELECT CONCAT(First_Name, ' ', Middle_Name, ' ', Last_Name) AS FullName FROM Portfolio_Profile LIMIT 1";
   $result = $conn->query($sql);
-  $fullName = ($result && $result->num_rows > 0) ? $result->fetch_assoc()['FullName'] : "Daniel Coton Evangelista";
+
+  $fullName = ($result && $result->num_rows > 0) 
+      ? $result->fetch_assoc()['FullName'] 
+      : "Daniel Coton Evangelista";
   ?>
+  
   <img src="Profile.jpg" alt="Profile Picture" class="circle-pic">
+  
   <div class="profile-info">
     <h2><?= htmlspecialchars($fullName) ?></h2>
+    
     <div class="social-icons">
       <a href="https://github.com/spidaniel45" target="_blank">
         <ion-icon name="logo-github"></ion-icon> @spidaniel45
@@ -107,19 +118,13 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
         <ion-icon name="logo-linkedin"></ion-icon> Daniel C. Evangelista
       </a>
       <a href="mailto:daniellora583@gmail.com">
-        <ion-icon name="mail-outline"></ion-icon> daniellora583@gmai<br>l.com
+        <ion-icon name="mail-outline"></ion-icon> daniellora583@gmail.com
       </a>
       <a href="tel:+639272858696">
         <ion-icon name="call-outline"></ion-icon> (+63)9272858696
       </a>
     </div>
   </div>
-</div>
-
-<div class="Upload_Info">
-    <h3>Upload</h3>
-    <p>You can upload one document to your portfolio.</p>
-    <button id="OpenUploadModalButton" class="action-button">Upload Document</button>
 </div>
 
 <div class="main-content">
@@ -129,23 +134,35 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
 
     <div class="About_Info">
       <details>
-        <summary>📋 Click Here to learn more</summary>
+        <summary>Click Here to learn more</summary>
         <ul class="top-nav">
           <li><a href="#about">About Me</a></li>
           <li><a href="#skills">Skills</a></li>
-          <li><a href="#documents">Documents</a></li>
+          <li><a href="#documents" id="ViewDocumentsButton" class="action-button">Documents</a></li>
           <li><a href="#certifications">Certifications</a></li>
           <li><a href="#git">Git History</a></li>
         </ul>
       </details>
     </div>
+    
+    <section id="about" class="content-section">
+      <h2>About Me</h2>
+      <p>I'm Still Learning</p>
+    </section>
 
+    <section id="skills" class="content-section">
+      <h2>Skills</h2>
+      <p>Front-End Tools: HTML, CSS, JavaScript</p>
+      <p>Back-End Tools: Java, Python, PHP</p>
+      <p>Database Management: MySQL, MariaDB</p>
+      <p>Version Control: Git, GitHub</p>
+      <p>Tools Used for Development: VS Code, XAMPP, Wordpress</p>
+    </section>
 
-<a href="https://github.com/spidaniel45?tab=repositories" target="_blank">
-  <img src="https://github-readme-stats.vercel.app/api?username=spidaniel45&show_icons=true&theme=dark" alt="GitHub Stats">
-</a>
-
-<button id="ViewDocumentsButton" class="action-button">View my Documents</button>
+    <a href="https://github.com/spidaniel45?tab=repositories" target="_blank">
+      <img src="https://github-readme-stats.vercel.app/api?username=spidaniel45&show_icons=true&theme=dark" 
+           alt="GitHub Stats">
+    </a>
 
     <form action="Upload_Project.php" method="POST" enctype="multipart/form-data">
         <h3>Add New Project</h3>
@@ -159,12 +176,17 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
     <h3>My Projects</h3>
     <div class="project-list">
     <?php
+    // Fetch all projects, newest first (DESC = descending order)
     $projects = $conn->query("SELECT * FROM Portfolio_Projects ORDER BY Date_Created DESC");
+    
     if ($projects && $projects->num_rows > 0) {
         while ($proj = $projects->fetch_assoc()) {
-            echo "<div class='project-item'>
-                    <h4>" . htmlspecialchars($proj['Project_Title']) . "</h4>
-                    <p>" . nl2br(htmlspecialchars($proj['Description'])) . "</p>";
+            echo "<div class='project-item'>";
+
+            echo "<h4>" . htmlspecialchars($proj['Project_Title']) . "</h4>";
+
+            echo "<p>" . nl2br(htmlspecialchars($proj['Description'])) . "</p>";
+
             if ($proj['Screenshot_Path']) {
                 echo "<img src='" . htmlspecialchars($proj['Screenshot_Path']) . "' alt='Project Screenshot'>";
             }
@@ -184,6 +206,7 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
     <div class="modal-content">
         <span class="close">&times;</span>
         <h3>My Documents</h3>
+        
         <div class="documents-list">
             <?php
             $docQuery = "SELECT File_Name, File_Path FROM Portfolio_Documents ORDER BY id DESC";
@@ -193,11 +216,14 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
                 while ($doc = $docResult->fetch_assoc()) {
                     $safeName = htmlspecialchars($doc['File_Name']);
                     $safePath = htmlspecialchars($doc['File_Path']);
+                    
                     echo "<div class='document-item'>
                             <p>$safeName</p>
                             <div class='document-actions'>
                                 <a class='download-link' href='$safePath' download>Download</a>
-                                <a class='delete-link' href='?delete=" . urlencode($doc['File_Name']) . "' onclick='return confirm(\"Delete this file?\")'>Delete</a>
+                                <a class='delete-link' 
+                                   href='?delete=" . urlencode($doc['File_Name']) . "' 
+                                   onclick='return confirm(\"Delete this file?\")'>Delete</a>
                             </div>
                           </div>";
                 }
@@ -210,23 +236,30 @@ if (isset($_GET['uploaded']) || isset($_GET['skipped'])) {
         </div>
     </div>
 </div>
-
+    
 <div id="UploadModal" class="modal">
     <div class="modal-content">
         <span class="close-upload">&times;</span>
         <h3>Upload a Document</h3>
         <form action="" method="POST" enctype="multipart/form-data" class="upload-form">
-            <input type="file" name="document[]" accept=".pdf,.doc,.docx,.txt" multiple required>
+            <input type="file" 
+                   name="document[]" 
+                   accept=".pdf,.doc,.docx,.txt" 
+                   multiple 
+                   required>
             <br><br>
             <button type="submit" class="action-button">Upload</button>
         </form>
     </div>
 </div>
 
-<?php $conn->close(); ?>
+<?php 
+$conn->close(); 
+?>
 
 <script src="Portfolio_Functions.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </body>
 </html>
