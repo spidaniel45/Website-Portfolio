@@ -16,42 +16,6 @@ if ($conn->connect_error) {
 
 
 ?>
-
-<!-- ==========================================
-     MAIN CONTENT AREA
-     ========================================== -->
-<div class="main-content">
-    <!-- Display feedback message if exists -->
-    <?php if ($message): ?>
-        <div class="Message_Info"><?= htmlspecialchars($message) ?></div>
-    <?php endif; ?>
-
-    <!-- ==========================================
-         ABOUT INFO BOX (Expandable Navigation)
-         ========================================== -->
-    <div class="About_Info">
-      <details>
-        <summary>Click Here to learn more</summary>
-        <ul class="top-nav">
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#documents" id="ViewDocumentsButton" class="action-button">Documents</a></li>
-          <li><a href="#certifications">Certifications</a></li>
-          <li><a href="#git">Git History</a></li>
-        </ul>
-      </details>
-    </div>
-
-    <!-- ==========================================
-         CONTENT SECTIONS
-         ========================================== -->
-    
-    <!-- About Me Section -->
-    <section id="about" class="content-section">
-      <h2>About Me</h2>
-      <p>I'm Still Learning</p>
-    </section>
-
     <!-- Skills Section -->
     <section id="skills" class="content-section">
       <h2>Skills</h2>
@@ -62,14 +26,6 @@ if ($conn->connect_error) {
       <p>Tools Used for Development: VS Code, XAMPP, Wordpress</p>
     </section>
     
-    <!-- GitHub Stats Image -->
-    <section id="git" class="content-section">
-    <h2>GitHub History</h2>
-    <a href="https://github.com/spidaniel45?tab=repositories" target="_blank">
-    <img src="https://github-readme-stats.vercel.app/api?username=spidaniel45&show_icons=true&theme=dark" alt="GitHub Stats">
-    <img src="https://ghchart.rshah.org/2ea44f/spidaniel45" alt="GitHub Contributions" class="githubcontributions">
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=spidaniel45&theme=github-dark" alt="GitHub Activity Graph" class="githubactivitygraph">
-    </a>
     
     <h3>My Projects</h3>
 
