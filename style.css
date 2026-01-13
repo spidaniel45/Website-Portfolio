@@ -1,0 +1,497 @@
+/* ==========================================
+   GLOBAL STYLES
+   ========================================== */
+
+/* Reset default margin and set base styles for entire page */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #2a2a2a;
+  color: white;
+  display: flex; /* Allows side-by-side layout for header and content */
+}
+
+
+/* ==========================================
+   HEADER SECTION (Profile Card)
+   ========================================== */
+
+/* Fixed sidebar containing profile information */
+.Header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  border: 5px solid #5e2a2a;
+  border-radius: 20px;
+  padding: 30px 20px;
+  margin: 20px;
+  width: 300px;
+  height: fit-content;
+  position: fixed; /* Stays in place while scrolling */
+  left: 0;
+  top: 0;
+}
+
+/* Circular profile picture styling */
+.circle-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures image fills circle without distortion */
+  margin-bottom: 20px;
+}
+
+/* Container for profile name and social links */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* Profile name styling */
+.profile-info h2 {
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Social media links container */
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between each link */
+  width: 100%;
+}
+
+/* Individual social link styling */
+.social-icons a {
+  color: #fff;
+  font-size: 16px;
+  transition: color 0.3s ease; /* Smooth color change on hover */
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between icon and text */
+}
+
+/* Icon size within social links */
+.social-icons a ion-icon {
+  font-size: 24px;
+}
+
+/* Hover effect for social links */
+.social-icons a:hover {
+  color: #b33a3a;
+}
+
+
+/* ==========================================
+   MAIN CONTENT AREA
+   ========================================== */
+
+/* Main content area that sits beside the fixed header */
+.main-content {
+  margin-left: 360px; /* Offset to avoid overlap with fixed header (300px + margins) */
+  padding: 20px;
+  flex: 1; /* Takes up remaining space */
+}
+
+
+/* ==========================================
+   ABOUT SECTION (Expandable Info Box)
+   ========================================== */
+
+/* Collapsible "About" information box */
+.About_Info {
+  width: calc(100% - 40px);
+  max-width: 800px;
+  margin: 20px 0;
+  background-color: #000;
+  border: 3px solid #5e2a2a;
+  border-radius: 10px;
+  color: #fff;
+  padding: 15px;
+}
+
+/* Clickable summary text for expanding/collapsing */
+.About_Info summary {
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  color: #ff6b6b;
+}
+
+/* ==========================================
+   NAVIGATION MENU
+   ========================================== */
+
+/* Horizontal navigation list */
+.top-nav {
+  list-style: none; /* Remove bullet points */
+  display: flex;
+  gap: 20px; /* Space between menu items */
+  margin: 15px 0 0 0;
+  padding: 0;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+/* Navigation link buttons */
+.top-nav li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background 0.3s; /* Smooth background color change */
+  background-color: #5e2a2a;
+  display: inline-block;
+}
+
+/* Hover effect for navigation buttons */
+.top-nav li a:hover {
+  background-color: #b33a3a;
+}
+
+/* ==========================================
+   GITHUB WIDGETS
+   ========================================== */
+
+.githubcontributions {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px;
+}
+
+.githubactivitygraph {
+  width: 100%;
+  border-radius:
+  10px;
+}
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+/* Reusable action button style */
+.action-button {
+  background-color: #5e2a2a;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px; /* Fully rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin: 10px 0;
+}
+
+/* Hover effect for action buttons */
+.action-button:hover {
+  background-color: #b33a3a;
+}
+
+
+/* ==========================================
+   UPLOAD INFO BOX (Fixed Right Side)
+   ========================================== */
+
+/* Fixed upload information box on the right side */
+.Upload_Info {
+  background-color: #000;
+  padding: 20px;
+  color: #fff;
+  border: 5px solid #5e2a2a;
+  border-radius: 15px;
+  position: fixed;
+  right: 40px;
+  top: 20px;
+  width: 280px;
+}
+
+.Upload_Info h3 {
+  margin-top: 0;
+}
+
+
+/* ==========================================
+   MESSAGE BOX (Success/Error Messages)
+   ========================================== */
+
+/* Notification message box for user feedback */
+.Message_Info {
+  width: 90%;
+  max-width: 600px;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #2a2a2a;
+  border: 2px solid #5e2a2a;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+}
+
+
+/* ==========================================
+   MODAL (Popup Window)
+   ========================================== */
+
+/* Modal overlay that covers entire screen */
+.modal {
+  display: none; /* Hidden by default, shown via JavaScript */
+  position: fixed;
+  z-index: 1000; /* Ensures modal appears above all other content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal content box */
+.modal-content {
+  width: 90%;
+  max-width: 600px;
+  padding: 30px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 5px solid #5e2a2a;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  max-height: 80vh; /* Prevents modal from exceeding viewport height */
+  overflow-y: auto; /* Adds scrollbar if content is too long */
+}
+
+.modal-content h3 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+/* Close button for modals */
+.close,
+.close-upload {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+/* Hover effect for close button */
+.close:hover,
+.close:focus,
+.close-upload:hover,
+.close-upload:focus {
+  color: #fff;
+}
+
+
+/* ==========================================
+   DOCUMENTS LIST (Inside Modal)
+   ========================================== */
+
+/* Container for list of documents */
+.documents-list {
+  margin-top: 20px;
+}
+
+/* Individual document item card */
+.document-item {
+  background-color: #2a2a2a;
+  padding: 15px;
+  margin: 10px 0;
+  border: 3px solid #5e2a2a;
+  border-radius: 8px;
+}
+
+/* Document filename display */
+.document-item p {
+  margin: 0 0 10px;
+  font-weight: bold;
+  word-break: break-word; /* Prevents long filenames from breaking layout */
+}
+
+/* Container for download/delete buttons */
+.document-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Base style for document action links */
+.download-link,
+.delete-link {
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #fff;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+/* Download button styling */
+.download-link {
+  background-color: #2196F3; /* Blue */
+}
+
+.download-link:hover {
+  background-color: #0b7dda; /* Darker blue */
+}
+
+/* Delete button styling */
+.delete-link {
+  background-color: #f44336; /* Red */
+}
+
+.delete-link:hover {
+  background-color: #da190b; /* Darker red */
+}
+
+
+/* ==========================================
+   FORMS
+   ========================================== */
+
+/* Form container styling */
+form {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border: 3px solid #5e2a2a;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+/* Input and textarea field styling */
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #2a2a2a;
+  border: 2px solid #5e2a2a;
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* File input specific styling */
+form input[type="file"] {
+  padding: 5px;
+}
+
+
+/* ==========================================
+   PROJECT DISPLAY
+   ========================================== */
+
+/* Container for all projects */
+.project-list {
+  margin-top: 20px;
+}
+
+/* Individual project card */
+.project-item {
+  background-color: #1a1a1a;
+  padding: 20px;
+  margin: 15px 0;
+  border: 3px solid #5e2a2a;
+  border-radius: 10px;
+}
+
+/* Project title styling */
+.project-item h4 {
+  margin-top: 0;
+  color: #ff6b6b; /* Accent color */
+}
+
+/* Project screenshot/image styling */
+.project-item img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Project link styling */
+.project-item a {
+  color: #2196F3; /* Blue for links */
+  text-decoration: none;
+}
+
+.project-item a:hover {
+  text-decoration: underline;
+}
+
+
+/* ==========================================
+   CONTENT SECTIONS
+   ========================================== */
+
+/* Generic content section styling */
+.content-section {
+  padding: 20px;
+  margin: 20px 0;
+  display: none;
+  background-color: #000;
+  color: #fff;
+  border: 5px solid #5e2a2a;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+.content-section:target {
+  display: block;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN (Mobile/Tablet Support)
+   ========================================== */
+
+/* Tablet and smaller desktop screens */
+@media (max-width: 1200px) {
+  /* Move upload info below main content instead of fixed position */
+  .Upload_Info {
+    position: static;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+  /* Stack layout vertically instead of side-by-side */
+  body {
+    flex-direction: column;
+  }
+  
+  /* Remove fixed positioning from header on mobile */
+  .Header {
+    position: static;
+    width: calc(100% - 40px); /* Full width minus margins */
+    margin: 20px;
+  }
+  
+  /* Remove left margin since header is no longer fixed */
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
