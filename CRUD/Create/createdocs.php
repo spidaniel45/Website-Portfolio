@@ -1,58 +1,55 @@
-<?php 
+<?php
+// ============================================================
+// CRUD/Create/createdocs.php
+// ============================================================
+declare(strict_types=1);
 
-$conn = new mysqli("localhost", "root", "", "Portfolio_Daniel");
+require_once __DIR__ . '/../../config/database.php';
+
+$conn = portfolioDb();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
-    $files = $_FILES['document']; // Get uploaded files array
-    $targetDir = "uploads/";       // Directory to store uploaded files
+    $files     = $_FILES['document'];
+    $targetDir = env('UPLOAD_DIR', 'uploads/');
+    $uploaded  = 0;
+    $skipped   = 0;
 
-    // Create uploads directory if it doesn't exist
     if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0755, true); // 0755 sets read/write/execute permissions
+        mkdir($targetDir, 0755, true);
     }
 
-    // Counters for feedback message
-    $uploaded = 0;
-    $skipped = 0;
-
-    // Loop through all uploaded files (supports multiple file upload)
     for ($i = 0; $i < count($files['name']); $i++) {
-        // Replace spaces with underscores in filename to avoid URL issues
-        $fileName = str_replace(' ', '_', $files['name'][$i]);
-        $fileTmp = $files['tmp_name'][$i];      // Temporary file location
-        $fileError = $files['error'][$i];       // Error code (0 = no error)
-        $targetFile = $targetDir . basename($fileName); // Full path for file
+        if ($files['error'][$i] !== UPLOAD_ERR_OK) {
+            continue;
+        }
 
-        // Check if file uploaded without errors
-        if ($fileError === UPLOAD_ERR_OK) {
-            // Check if filename already exists in database
-            $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM Portfolio_Documents WHERE File_Name = ?");
-            $stmt->bind_param("s", $fileName);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $exists = $result->fetch_assoc()['count'] > 0;
-            $stmt->close();
+        $fileName   = str_replace(' ', '_', $files['name'][$i]);
+        $fileTmp    = $files['tmp_name'][$i];
+        $targetFile = $targetDir . basename($fileName);
 
-            // Skip if file already exists in database or on server
-            if ($exists || file_exists($targetFile)) {
-                $skipped++;
-                continue; // Skip to next file
-            }
+        $check = $conn->prepare("SELECT COUNT(*) AS cnt FROM Portfolio_Documents WHERE File_Name = ?");
+        $check->bind_param("s", $fileName);
+        $check->execute();
+        $exists = $check->get_result()->fetch_assoc()['cnt'] > 0;
+        $check->close();
 
-            // Move file from temporary location to uploads directory
-            if (move_uploaded_file($fileTmp, $targetFile)) {
-                // Insert file record into database
-                $stmt = $conn->prepare("INSERT INTO Portfolio_Documents (File_Name, File_Path) VALUES (?, ?)");
-                $stmt->bind_param("ss", $fileName, $targetFile); // "ss" = two string parameters
-                $stmt->execute();
-                $stmt->close();
-                $uploaded++;
-            }
+        if ($exists || file_exists($targetFile)) {
+            $skipped++;
+            continue;
+        }
+
+        if (move_uploaded_file($fileTmp, $targetFile)) {
+            $ins = $conn->prepare("INSERT INTO Portfolio_Documents (File_Name, File_Path) VALUES (?, ?)");
+            $ins->bind_param("ss", $fileName, $targetFile);
+            $ins->execute();
+            $ins->close();
+            $uploaded++;
         }
     }
 
-    // Redirect with upload statistics in URL
-    header("Location: " . $_SERVER['PHP_SELF'] . "?uploaded=$uploaded&skipped=$skipped");
+    $conn->close();
+    header("Location: " . $_SERVER['PHP_SELF'] . "?uploaded={$uploaded}&skipped={$skipped}");
     exit();
 }
-?>
+
+$conn->close();

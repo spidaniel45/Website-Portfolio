@@ -1,497 +1,380 @@
-/* ==========================================
-   GLOBAL STYLES
-   ========================================== */
+/* ============================================================
+   style.css  –  Custom overrides on top of Bootstrap 5
+   Import order in HTML:
+     1. Bootstrap 5 CDN
+     2. Bootstrap Icons CDN
+     3. This file
+   ============================================================ */
 
-/* Reset default margin and set base styles for entire page */
+/* ── CSS Variables (Design Tokens) ──────────────────────────── */
+:root {
+    --brand-dark:   #5e2a2a;
+    --brand-mid:    #8b3a3a;
+    --brand-light:  #b33a3a;
+    --brand-accent: #ff6b6b;
+    --surface-0:    #000000;
+    --surface-1:    #1a1a1a;
+    --surface-2:    #2a2a2a;
+    --text-primary: #ffffff;
+    --text-muted:   #aaaaaa;
+    --border-color: var(--brand-dark);
+    --transition:   0.3s ease;
+    --radius-card:  15px;
+    --radius-btn:   50px;
+    --sidebar-w:    300px;
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #2a2a2a;
-  color: white;
-  display: flex; /* Allows side-by-side layout for header and content */
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', sans-serif;
 }
 
+/* ── Scrollbar ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-1); }
+::-webkit-scrollbar-thumb { background: var(--brand-dark); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-light); }
 
-/* ==========================================
-   HEADER SECTION (Profile Card)
-   ========================================== */
-
-/* Fixed sidebar containing profile information */
+/* ── Sidebar / Header ─────────────────────────────────────────── */
 .Header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #000;
-  color: #fff;
-  border: 5px solid #5e2a2a;
-  border-radius: 20px;
-  padding: 30px 20px;
-  margin: 20px;
-  width: 300px;
-  height: fit-content;
-  position: fixed; /* Stays in place while scrolling */
-  left: 0;
-  top: 0;
-}
-
-/* Circular profile picture styling */
-.circle-pic {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures image fills circle without distortion */
-  margin-bottom: 20px;
-}
-
-/* Container for profile name and social links */
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-}
-
-/* Profile name styling */
-.profile-info h2 {
-  margin: 0 0 20px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* Social media links container */
-.social-icons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px; /* Space between each link */
-  width: 100%;
-}
-
-/* Individual social link styling */
-.social-icons a {
-  color: #fff;
-  font-size: 16px;
-  transition: color 0.3s ease; /* Smooth color change on hover */
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Space between icon and text */
-}
-
-/* Icon size within social links */
-.social-icons a ion-icon {
-  font-size: 24px;
-}
-
-/* Hover effect for social links */
-.social-icons a:hover {
-  color: #b33a3a;
-}
-
-
-/* ==========================================
-   MAIN CONTENT AREA
-   ========================================== */
-
-/* Main content area that sits beside the fixed header */
-.main-content {
-  margin-left: 360px; /* Offset to avoid overlap with fixed header (300px + margins) */
-  padding: 20px;
-  flex: 1; /* Takes up remaining space */
-}
-
-
-/* ==========================================
-   ABOUT SECTION (Expandable Info Box)
-   ========================================== */
-
-/* Collapsible "About" information box */
-.About_Info {
-  width: calc(100% - 40px);
-  max-width: 800px;
-  margin: 20px 0;
-  background-color: #000;
-  border: 3px solid #5e2a2a;
-  border-radius: 10px;
-  color: #fff;
-  padding: 15px;
-}
-
-/* Clickable summary text for expanding/collapsing */
-.About_Info summary {
-  cursor: pointer;
-  font-size: 16px;
-  padding: 5px;
-  color: #ff6b6b;
-}
-
-/* ==========================================
-   NAVIGATION MENU
-   ========================================== */
-
-/* Horizontal navigation list */
-.top-nav {
-  list-style: none; /* Remove bullet points */
-  display: flex;
-  gap: 20px; /* Space between menu items */
-  margin: 15px 0 0 0;
-  padding: 0;
-  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-}
-
-/* Navigation link buttons */
-.top-nav li a {
-  color: white;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  transition: background 0.3s; /* Smooth background color change */
-  background-color: #5e2a2a;
-  display: inline-block;
-}
-
-/* Hover effect for navigation buttons */
-.top-nav li a:hover {
-  background-color: #b33a3a;
-}
-
-/* ==========================================
-   GITHUB WIDGETS
-   ========================================== */
-
-.githubcontributions {
-  width: 100%;
-  max-width: 800px;
-  border-radius: 8px;
-}
-
-.githubactivitygraph {
-  width: 100%;
-  border-radius:
-  10px;
-}
-/* ==========================================
-   BUTTONS
-   ========================================== */
-
-/* Reusable action button style */
-.action-button {
-  background-color: #5e2a2a;
-  color: #fff;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 50px; /* Fully rounded corners */
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-  margin: 10px 0;
-}
-
-/* Hover effect for action buttons */
-.action-button:hover {
-  background-color: #b33a3a;
-}
-
-
-/* ==========================================
-   UPLOAD INFO BOX (Fixed Right Side)
-   ========================================== */
-
-/* Fixed upload information box on the right side */
-.Upload_Info {
-  background-color: #000;
-  padding: 20px;
-  color: #fff;
-  border: 5px solid #5e2a2a;
-  border-radius: 15px;
-  position: fixed;
-  right: 40px;
-  top: 20px;
-  width: 280px;
-}
-
-.Upload_Info h3 {
-  margin-top: 0;
-}
-
-
-/* ==========================================
-   MESSAGE BOX (Success/Error Messages)
-   ========================================== */
-
-/* Notification message box for user feedback */
-.Message_Info {
-  width: 90%;
-  max-width: 600px;
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #2a2a2a;
-  border: 2px solid #5e2a2a;
-  border-radius: 8px;
-  text-align: center;
-  font-size: 16px;
-  color: #fff;
-}
-
-
-/* ==========================================
-   MODAL (Popup Window)
-   ========================================== */
-
-/* Modal overlay that covers entire screen */
-.modal {
-  display: none; /* Hidden by default, shown via JavaScript */
-  position: fixed;
-  z-index: 1000; /* Ensures modal appears above all other content */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
-  justify-content: center;
-  align-items: center;
-}
-
-/* Modal content box */
-.modal-content {
-  width: 90%;
-  max-width: 600px;
-  padding: 30px;
-  background-color: #1a1a1a;
-  color: #fff;
-  border: 5px solid #5e2a2a;
-  border-radius: 15px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  max-height: 80vh; /* Prevents modal from exceeding viewport height */
-  overflow-y: auto; /* Adds scrollbar if content is too long */
-}
-
-.modal-content h3 {
-  margin: 0 0 20px;
-  font-size: 24px;
-}
-
-/* Close button for modals */
-.close,
-.close-upload {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #aaa;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-/* Hover effect for close button */
-.close:hover,
-.close:focus,
-.close-upload:hover,
-.close-upload:focus {
-  color: #fff;
-}
-
-
-/* ==========================================
-   DOCUMENTS LIST (Inside Modal)
-   ========================================== */
-
-/* Container for list of documents */
-.documents-list {
-  margin-top: 20px;
-}
-
-/* Individual document item card */
-.document-item {
-  background-color: #2a2a2a;
-  padding: 15px;
-  margin: 10px 0;
-  border: 3px solid #5e2a2a;
-  border-radius: 8px;
-}
-
-/* Document filename display */
-.document-item p {
-  margin: 0 0 10px;
-  font-weight: bold;
-  word-break: break-word; /* Prevents long filenames from breaking layout */
-}
-
-/* Container for download/delete buttons */
-.document-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* Base style for document action links */
-.download-link,
-.delete-link {
-  padding: 8px 16px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 14px;
-  color: #fff;
-  transition: background-color 0.3s;
-  font-weight: bold;
-}
-
-/* Download button styling */
-.download-link {
-  background-color: #2196F3; /* Blue */
-}
-
-.download-link:hover {
-  background-color: #0b7dda; /* Darker blue */
-}
-
-/* Delete button styling */
-.delete-link {
-  background-color: #f44336; /* Red */
-}
-
-.delete-link:hover {
-  background-color: #da190b; /* Darker red */
-}
-
-
-/* ==========================================
-   FORMS
-   ========================================== */
-
-/* Form container styling */
-form {
-  background-color: #1a1a1a;
-  padding: 20px;
-  border: 3px solid #5e2a2a;
-  border-radius: 10px;
-  margin: 20px 0;
-}
-
-/* Input and textarea field styling */
-form input,
-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #2a2a2a;
-  border: 2px solid #5e2a2a;
-  border-radius: 5px;
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-/* File input specific styling */
-form input[type="file"] {
-  padding: 5px;
-}
-
-
-/* ==========================================
-   PROJECT DISPLAY
-   ========================================== */
-
-/* Container for all projects */
-.project-list {
-  margin-top: 20px;
-}
-
-/* Individual project card */
-.project-item {
-  background-color: #1a1a1a;
-  padding: 20px;
-  margin: 15px 0;
-  border: 3px solid #5e2a2a;
-  border-radius: 10px;
-}
-
-/* Project title styling */
-.project-item h4 {
-  margin-top: 0;
-  color: #ff6b6b; /* Accent color */
-}
-
-/* Project screenshot/image styling */
-.project-item img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin: 10px 0;
-}
-
-/* Project link styling */
-.project-item a {
-  color: #2196F3; /* Blue for links */
-  text-decoration: none;
-}
-
-.project-item a:hover {
-  text-decoration: underline;
-}
-
-
-/* ==========================================
-   CONTENT SECTIONS
-   ========================================== */
-
-/* Generic content section styling */
-.content-section {
-  padding: 20px;
-  margin: 20px 0;
-  display: none;
-  background-color: #000;
-  color: #fff;
-  border: 5px solid #5e2a2a;
-  border-radius: 20px;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-}
-
-.content-section:target {
-  display: block;
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ==========================================
-   RESPONSIVE DESIGN (Mobile/Tablet Support)
-   ========================================== */
-
-/* Tablet and smaller desktop screens */
-@media (max-width: 1200px) {
-  /* Move upload info below main content instead of fixed position */
-  .Upload_Info {
-    position: static;
-    margin: 20px 0;
-    width: 100%;
-    max-width: 600px;
-  }
-}
-
-/* Mobile devices */
-@media (max-width: 768px) {
-  /* Stack layout vertically instead of side-by-side */
-  body {
+    display: flex;
     flex-direction: column;
-  }
-  
-  /* Remove fixed positioning from header on mobile */
-  .Header {
-    position: static;
-    width: calc(100% - 40px); /* Full width minus margins */
+    align-items: center;
+    background-color: var(--surface-0);
+    color: var(--text-primary);
+    border: 5px solid var(--brand-dark);
+    border-radius: 20px;
+    padding: 30px 20px;
     margin: 20px;
-  }
-  
-  /* Remove left margin since header is no longer fixed */
-  .main-content {
-    margin-left: 0;
+    width: var(--sidebar-w);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform var(--transition);
+}
+
+.circle-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--brand-dark);
+    margin-bottom: 20px;
+    transition: border-color var(--transition), transform var(--transition);
+}
+.circle-pic:hover {
+    border-color: var(--brand-accent);
+    transform: scale(1.05);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+.profile-info h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+}
+
+/* ── Social Icons ─────────────────────────────────────────────── */
+.social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+.social-icons a {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background var(--transition), color var(--transition);
+}
+.social-icons a ion-icon { font-size: 20px; flex-shrink: 0; }
+.social-icons a:hover {
+    color: var(--brand-accent);
+    background: rgba(255,107,107,0.08);
+}
+
+/* ── Main Content ─────────────────────────────────────────────── */
+.main-content {
+    margin-left: calc(var(--sidebar-w) + 60px);
+    padding: 24px 24px 48px;
+    min-height: 100vh;
+}
+
+/* ── Cards / Sections ─────────────────────────────────────────── */
+.card-dark {
+    background-color: var(--surface-1);
+    border: 3px solid var(--brand-dark);
+    border-radius: var(--radius-card);
+    color: var(--text-primary);
+}
+
+/* About Info expandable box */
+.About_Info {
+    background-color: var(--surface-0);
+    border: 3px solid var(--brand-dark);
+    border-radius: 10px;
+    color: var(--text-primary);
+    padding: 15px;
+    margin-bottom: 1.5rem;
+    max-width: 820px;
+}
+.About_Info summary {
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px;
+    color: var(--brand-accent);
+    list-style: none;
+    user-select: none;
+}
+.About_Info summary::-webkit-details-marker { display: none; }
+.About_Info summary::before {
+    content: '▸ ';
+    transition: transform var(--transition);
+}
+details[open] summary::before { content: '▾ '; }
+
+/* ── Navigation ───────────────────────────────────────────────── */
+.top-nav {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0 0;
+    padding: 0;
+}
+.top-nav li a {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    background-color: var(--brand-dark);
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background var(--transition), transform var(--transition);
+}
+.top-nav li a:hover {
+    background-color: var(--brand-light);
+    transform: translateY(-1px);
+}
+
+/* ── Action Button ────────────────────────────────────────────── */
+.action-button,
+.btn-brand {
+    background-color: var(--brand-dark);
+    color: var(--text-primary) !important;
+    border: none;
+    border-radius: var(--radius-btn);
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    text-decoration: none;
+    display: inline-block;
+}
+.action-button:hover,
+.btn-brand:hover {
+    background-color: var(--brand-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(179, 58, 58, 0.4);
+}
+
+/* ── GitHub Widgets ───────────────────────────────────────────── */
+.githubcontributions {
+    width: 100%;
+    max-width: 820px;
+    border-radius: 8px;
+}
+.githubactivitygraph {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* ── Upload Info Box (fixed right) ───────────────────────────── */
+.Upload_Info {
+    background-color: var(--surface-0);
     padding: 20px;
-  }
+    color: var(--text-primary);
+    border: 5px solid var(--brand-dark);
+    border-radius: 15px;
+    position: fixed;
+    right: 24px;
+    top: 20px;
+    width: 280px;
+    z-index: 99;
+}
+.Upload_Info h3 { margin-top: 0; font-size: 1rem; }
+
+/* ── Message Info ─────────────────────────────────────────────── */
+.Message_Info {
+    background-color: var(--surface-2);
+    border: 2px solid var(--brand-dark);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    max-width: 640px;
+}
+
+/* ── Modal ────────────────────────────────────────────────────── */
+/* Bootstrap handles most of the modal, these override its colors */
+.modal-dark .modal-content {
+    background-color: var(--surface-1);
+    border: 5px solid var(--brand-dark);
+    border-radius: 15px;
+    color: var(--text-primary);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.modal-dark .modal-header {
+    border-bottom: 1px solid var(--brand-dark);
+}
+.modal-dark .modal-footer {
+    border-top: 1px solid var(--brand-dark);
+}
+.modal-dark .btn-close {
+    filter: invert(1);
+}
+
+/* ── Documents List ───────────────────────────────────────────── */
+.document-item {
+    background-color: var(--surface-2);
+    padding: 14px;
+    margin: 10px 0;
+    border: 3px solid var(--brand-dark);
+    border-radius: 8px;
+    transition: border-color var(--transition);
+}
+.document-item:hover { border-color: var(--brand-light); }
+.document-item p {
+    margin: 0 0 10px;
+    font-weight: 600;
+    word-break: break-word;
+}
+.document-actions { display: flex; gap: 10px; justify-content: center; }
+
+.download-link, .delete-link {
+    padding: 7px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: 600;
+    transition: background var(--transition), transform var(--transition);
+}
+.download-link { background-color: #2196F3; }
+.download-link:hover { background-color: #0b7dda; transform: translateY(-1px); }
+.delete-link { background-color: #f44336; }
+.delete-link:hover { background-color: #da190b; transform: translateY(-1px); }
+
+/* ── Forms ────────────────────────────────────────────────────── */
+.form-dark {
+    background-color: var(--surface-1);
+    border: 3px solid var(--brand-dark);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 20px 0;
+    max-width: 820px;
+}
+.form-dark .form-control,
+.form-dark .form-control:focus {
+    background-color: var(--surface-2);
+    border: 2px solid var(--brand-dark);
+    border-radius: 5px;
+    color: var(--text-primary);
+    font-family: 'Segoe UI', sans-serif;
+}
+.form-dark .form-control:focus {
+    border-color: var(--brand-light);
+    box-shadow: 0 0 0 0.15rem rgba(179,58,58,0.35);
+}
+.form-dark .form-control::placeholder { color: var(--text-muted); }
+.form-dark label { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 4px; }
+
+/* ── Project Cards ────────────────────────────────────────────── */
+.project-list { margin-top: 20px; }
+.project-item {
+    background-color: var(--surface-1);
+    padding: 20px;
+    margin-bottom: 16px;
+    border: 3px solid var(--brand-dark);
+    border-radius: 10px;
+    transition: border-color var(--transition), transform var(--transition);
+    max-width: 820px;
+}
+.project-item:hover {
+    border-color: var(--brand-light);
+    transform: translateY(-2px);
+}
+.project-item h4 { margin-top: 0; color: var(--brand-accent); font-weight: 700; }
+.project-item img { max-width: 100%; border-radius: 8px; margin: 10px 0; }
+.project-item a { color: #2196F3; text-decoration: none; }
+.project-item a:hover { text-decoration: underline; }
+
+/* ── Content Sections ─────────────────────────────────────────── */
+.content-section {
+    display: none;
+    padding: 24px;
+    margin: 20px 0;
+    background-color: var(--surface-0);
+    color: var(--text-primary);
+    border: 5px solid var(--brand-dark);
+    border-radius: 20px;
+    max-width: 820px;
+}
+.content-section:target {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Bootstrap Alert overrides ───────────────────────────────── */
+.alert-brand {
+    background-color: rgba(94,42,42,0.3);
+    border: 1px solid var(--brand-dark);
+    color: var(--brand-accent);
+    border-radius: 8px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+    .Upload_Info {
+        position: static;
+        margin: 20px 0;
+        width: 100%;
+        max-width: 640px;
+    }
+}
+@media (max-width: 992px) {
+    .Header {
+        position: static;
+        width: calc(100% - 40px);
+        height: auto;
+        margin: 20px;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    body { flex-direction: column; }
 }
