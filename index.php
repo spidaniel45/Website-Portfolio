@@ -81,8 +81,8 @@ if (isset($_GET['project_added'])) {
     $message = '<i class="bi bi-check-circle-fill me-2"></i>Project added successfully!';
 }
 if (isset($_GET['uploaded'])) {
-    $up  = (int) $_GET['uploaded'];
-    $sk  = (int) $_GET['skipped'];
+    $up      = (int) $_GET['uploaded'];
+    $sk      = (int) $_GET['skipped'];
     $message = "<i class='bi bi-cloud-upload-fill me-2'></i>Uploaded: {$up} file(s). Skipped: {$sk} duplicate(s).";
 }
 
@@ -96,7 +96,7 @@ $fullName   = ($nameResult && $nameResult->num_rows > 0)
 $projects = $conn->query("SELECT * FROM Portfolio_Projects ORDER BY Date_Created DESC");
 
 // ── Fetch documents ────────────────────────────────────────────
-$documents = $conn->query("SELECT File_Name, File_Path FROM Portfolio_Documents ORDER BY id DESC");
+$documents = $conn->query("SELECT File_Name, File_Path FROM Portfolio_Documents ORDER BY ID DESC");
 
 $conn->close();
 ?>
@@ -111,6 +111,8 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Devicons (tech stack logos) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <!-- Custom overrides -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -159,18 +161,18 @@ $conn->close();
             <details>
                 <summary>Click here to explore</summary>
                 <ul class="top-nav mt-3">
-                    <li><a href="#about">About Me</a></li>
-                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#about"><i class="bi bi-person me-1"></i>About Me</a></li>
+                    <li><a href="#skills"><i class="bi bi-tools me-1"></i>Skills</a></li>
                     <li>
                         <a href="#"
                            data-bs-toggle="modal"
                            data-bs-target="#DownloadModal"
                            class="action-button">
-                            Documents
+                            <i class="bi bi-folder2-open me-1"></i>Documents
                         </a>
                     </li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#git">Git History</a></li>
+                    <li><a href="#certifications"><i class="bi bi-award me-1"></i>Certifications</a></li>
+                    <li><a href="#git"><i class="bi bi-github me-1"></i>Git History</a></li>
                 </ul>
             </details>
         </div>
@@ -181,30 +183,34 @@ $conn->close();
         <?php include __DIR__ . '/webfolio/sub-interface/github.php'; ?>
 
         <!-- ── Projects ─────────────────────────────────────── -->
-        <h3 class="mt-4 mb-3 fw-bold">My Projects</h3>
+        <h3 class="mt-4 mb-3 fw-bold">
+            <i class="bi bi-code-slash me-2"></i>My Projects
+        </h3>
 
         <!-- Add Project Form -->
         <div class="form-dark">
-            <h5 class="mb-3">Add New Project</h5>
+            <h5 class="mb-3 fw-semibold">
+                <i class="bi bi-plus-square me-2"></i>Add New Project
+            </h5>
             <form action="Upload_Project.php" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="projectTitle">Project Title</label>
+                    <label for="projectTitle" class="form-label">Project Title</label>
                     <input type="text" id="projectTitle" name="title"
                            class="form-control" placeholder="Project Title" required>
                 </div>
                 <div class="mb-3">
-                    <label for="projectDesc">Description</label>
+                    <label for="projectDesc" class="form-label">Description</label>
                     <textarea id="projectDesc" name="description"
                               class="form-control" rows="4"
                               placeholder="Project Description" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="projectScreenshot">Screenshot</label>
+                    <label for="projectScreenshot" class="form-label">Screenshot</label>
                     <input type="file" id="projectScreenshot" name="screenshot"
                            class="form-control" accept="image/*">
                 </div>
                 <div class="mb-3">
-                    <label for="projectLink">Live / GitHub Link</label>
+                    <label for="projectLink" class="form-label">Live / GitHub Link</label>
                     <input type="url" id="projectLink" name="link"
                            class="form-control" placeholder="https://...">
                 </div>
@@ -215,23 +221,28 @@ $conn->close();
         </div>
 
         <!-- Project List -->
-        <div class="project-list">
+        <div class="project-list mt-3">
             <?php if ($projects && $projects->num_rows > 0): ?>
                 <?php while ($proj = $projects->fetch_assoc()): ?>
                     <div class="project-item">
                         <h4><?= htmlspecialchars($proj['Project_Title']) ?></h4>
+                        <p class="text-muted small mb-2">
+                            <i class="bi bi-calendar3 me-1"></i>
+                            <?= date('M j, Y', strtotime($proj['Date_Created'])) ?>
+                        </p>
                         <p><?= nl2br(htmlspecialchars($proj['Description'])) ?></p>
 
                         <?php if ($proj['Screenshot_Path']): ?>
                             <img src="<?= htmlspecialchars($proj['Screenshot_Path']) ?>"
-                                 alt="<?= htmlspecialchars($proj['Project_Title']) ?> screenshot">
+                                 alt="<?= htmlspecialchars($proj['Project_Title']) ?> screenshot"
+                                 class="img-fluid rounded-3 mb-2">
                         <?php endif; ?>
 
                         <?php if ($proj['Project_Link']): ?>
-                            <p>
+                            <p class="mb-0">
                                 <a href="<?= htmlspecialchars($proj['Project_Link']) ?>"
                                    target="_blank" rel="noopener">
-                                    View Project →
+                                    <i class="bi bi-box-arrow-up-right me-1"></i>View Project →
                                 </a>
                             </p>
                         <?php endif; ?>
@@ -282,7 +293,10 @@ $conn->close();
                                 </div>
                             <?php endwhile; ?>
                         <?php else: ?>
-                            <p class="text-muted text-center">No documents uploaded yet.</p>
+                            <p class="text-muted text-center py-3">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+                                No documents uploaded yet.
+                            </p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -312,7 +326,7 @@ $conn->close();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data" class="form-dark">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label class="form-label">Select Files</label>
                             <input type="file"
@@ -321,7 +335,9 @@ $conn->close();
                                    accept=".pdf,.doc,.docx,.txt"
                                    multiple
                                    required>
-                            <div class="form-text text-muted">Accepted: PDF, DOC, DOCX, TXT</div>
+                            <div class="form-text text-muted">
+                                <i class="bi bi-info-circle me-1"></i>Accepted: PDF, DOC, DOCX, TXT
+                            </div>
                         </div>
                         <button type="submit" class="action-button w-100">
                             <i class="bi bi-upload me-1"></i>Upload
