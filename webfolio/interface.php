@@ -1,8 +1,6 @@
 <?php 
 
-$conn = new mysqli("localhost", "root", "", "Portfolio_Daniel");
-
-<div class="Header">
+require_once __DIR__ . '/../config/database.php';
 
   $sql = "SELECT CONCAT(First_Name, ' ', Middle_Name, ' ', Last_Name) AS FullName FROM Portfolio_Profile LIMIT 1";
   $result = $conn->query($sql);
@@ -11,7 +9,7 @@ $conn = new mysqli("localhost", "root", "", "Portfolio_Daniel");
   $fullName = ($result && $result->num_rows > 0) 
       ? $result->fetch_assoc()['FullName'] 
       : "Daniel Coton Evangelista";
-  
+?>  
   <img src="Profile.jpg" alt="Profile Picture" class="circle-pic">
   
   <div class="profile-info">
@@ -35,4 +33,3 @@ $conn = new mysqli("localhost", "root", "", "Portfolio_Daniel");
     </div>
   </div>
 </div>
-?>

@@ -176,9 +176,9 @@ $conn->close();
         </div>
 
         <!-- ── Sub-interface includes ───────────────────────── -->
-        <?php include __DIR__ . '/INTERFACE/SUB-INTERFACE/aboutme.php'; ?>
-        <?php include __DIR__ . '/INTERFACE/SUB-INTERFACE/skills.php'; ?>
-        <?php include __DIR__ . '/INTERFACE/SUB-INTERFACE/github.php'; ?>
+        <?php include __DIR__ . '/webfolio/sub-interface/aboutme.php'; ?>
+        <?php include __DIR__ . '/webfolio/sub-interface/skills.php'; ?>
+        <?php include __DIR__ . '/webfolio/sub-interface/github.php'; ?>
 
         <!-- ── Projects ─────────────────────────────────────── -->
         <h3 class="mt-4 mb-3 fw-bold">My Projects</h3>
