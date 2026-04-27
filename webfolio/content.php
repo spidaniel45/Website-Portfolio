@@ -38,6 +38,14 @@ if (isset($_GET['uploaded'])) {
 </head>
 <body class="d-flex">
 
+<!-- SVG Filter for Glass Distortion -->
+<svg style="display:none" aria-hidden="true">
+    <filter id="glass-distortion">
+        <feTurbulence type="turbulence" baseFrequency="0.008" numOctaves="2" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="77" />
+    </filter>
+</svg>
+
 <div class="main-content flex-fill">
 
     <!-- Flash message -->
@@ -54,18 +62,64 @@ if (isset($_GET['uploaded'])) {
         <details>
             <summary>Click here to explore</summary>
             <ul class="top-nav mt-3">
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#skills">Skills</a></li>
+                <li>
+                    <a href="#about">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-person"></i>
+                            <span>About</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#skills">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-tools"></i>
+                            <span>Skills</span>
+                        </div>
+                    </a>
+                </li>
                 <li>
                     <a href="#"
                        data-bs-toggle="modal"
                        data-bs-target="#DownloadModal"
-                       class="action-button">
-                        <i class="bi bi-folder2-open me-1"></i>Documents
+                       class="action-button glass-nav-btn">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-folder2-open"></i>
+                            <span>Docs</span>
+                        </div>
                     </a>
                 </li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#git">Git History</a></li>
+                <li>
+                    <a href="#certifications">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-award"></i>
+                            <span>Certs</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#git">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-github"></i>
+                            <span>GitHub</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </details>
     </div>

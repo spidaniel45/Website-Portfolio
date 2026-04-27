@@ -118,6 +118,14 @@ $conn->close();
 </head>
 <body class="d-flex">
 
+    <!-- SVG Filter for Glass Distortion (hidden, referenced by CSS filter) -->
+    <svg style="display:none" aria-hidden="true">
+        <filter id="glass-distortion">
+            <feTurbulence type="turbulence" baseFrequency="0.008" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="77" />
+        </filter>
+    </svg>
+
     <!-- =====================================================
          SIDEBAR — Profile Card
          ===================================================== -->
@@ -156,25 +164,87 @@ $conn->close();
             </div>
         <?php endif; ?>
 
-        <!-- About Info / Navigation -->
-        <div class="About_Info mb-4">
-            <details>
-                <summary>Click here to explore</summary>
-                <ul class="top-nav mt-3">
-                    <li><a href="#about"><i class="bi bi-person me-1"></i>About Me</a></li>
-                    <li><a href="#skills"><i class="bi bi-tools me-1"></i>Skills</a></li>
-                    <li>
-                        <a href="#"
-                           data-bs-toggle="modal"
-                           data-bs-target="#DownloadModal"
-                           class="action-button">
-                            <i class="bi bi-folder2-open me-1"></i>Documents
-                        </a>
-                    </li>
-                    <li><a href="#certifications"><i class="bi bi-award me-1"></i>Certifications</a></li>
-                    <li><a href="#git"><i class="bi bi-github me-1"></i>Git History</a></li>
-                </ul>
-            </details>
+        <!-- Hamburger Nav -->
+        <div class="hamburger-nav" id="hamburgerNav">
+            <!-- Hamburger toggle button -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <!-- Slide-out icon tray -->
+            <ul class="top-nav" id="navTray">
+                <li style="--i:0">
+                    <a href="#about">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-person"></i>
+                            <span>About</span>
+                        </div>
+                    </a>
+                </li>
+                <li style="--i:1">
+                    <a href="#skills">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-tools"></i>
+                            <span>Skills</span>
+                        </div>
+                    </a>
+                </li>
+                <li style="--i:2">
+                    <a href="#git">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-github"></i>
+                            <span>GitHub</span>
+                        </div>
+                    </a>
+                </li>
+                <li style="--i:3">
+                    <a href="#projects">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-code-slash"></i>
+                            <span>Projects</span>
+                        </div>
+                    </a>
+                </li>
+                <li style="--i:4">
+                    <a href="#"
+                       data-bs-toggle="modal"
+                       data-bs-target="#DownloadModal"
+                       class="action-button glass-nav-btn">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-folder2-open"></i>
+                            <span>Docs</span>
+                        </div>
+                    </a>
+                </li>
+                <li style="--i:5">
+                    <a href="#certifications">
+                        <div class="glass-filter"></div>
+                        <div class="glass-overlay"></div>
+                        <div class="glass-specular"></div>
+                        <div class="glass-content">
+                            <i class="bi bi-award"></i>
+                            <span>Certs</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <!-- ── Sub-interface includes ───────────────────────── -->
@@ -182,76 +252,78 @@ $conn->close();
         <?php include __DIR__ . '/webfolio/sub-interface/skills.php'; ?>
         <?php include __DIR__ . '/webfolio/sub-interface/github.php'; ?>
 
-        <!-- ── Projects ─────────────────────────────────────── -->
-        <h3 class="mt-4 mb-3 fw-bold">
-            <i class="bi bi-code-slash me-2"></i>My Projects
-        </h3>
+        <!-- ── Projects Section ─────────────────────────────── -->
+        <section id="projects" class="content-section">
+            <h2 class="fw-bold mb-4">
+                <i class="bi bi-code-slash me-2"></i>My Projects
+            </h2>
 
-        <!-- Add Project Form -->
-        <div class="form-dark">
-            <h5 class="mb-3 fw-semibold">
-                <i class="bi bi-plus-square me-2"></i>Add New Project
-            </h5>
-            <form action="Upload_Project.php" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="projectTitle" class="form-label">Project Title</label>
-                    <input type="text" id="projectTitle" name="title"
-                           class="form-control" placeholder="Project Title" required>
-                </div>
-                <div class="mb-3">
-                    <label for="projectDesc" class="form-label">Description</label>
-                    <textarea id="projectDesc" name="description"
-                              class="form-control" rows="4"
-                              placeholder="Project Description" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="projectScreenshot" class="form-label">Screenshot</label>
-                    <input type="file" id="projectScreenshot" name="screenshot"
-                           class="form-control" accept="image/*">
-                </div>
-                <div class="mb-3">
-                    <label for="projectLink" class="form-label">Live / GitHub Link</label>
-                    <input type="url" id="projectLink" name="link"
-                           class="form-control" placeholder="https://...">
-                </div>
-                <button type="submit" class="action-button">
-                    <i class="bi bi-plus-circle me-1"></i> Add Project
-                </button>
-            </form>
-        </div>
-
-        <!-- Project List -->
-        <div class="project-list mt-3">
-            <?php if ($projects && $projects->num_rows > 0): ?>
-                <?php while ($proj = $projects->fetch_assoc()): ?>
-                    <div class="project-item">
-                        <h4><?= htmlspecialchars($proj['Project_Title']) ?></h4>
-                        <p class="text-muted small mb-2">
-                            <i class="bi bi-calendar3 me-1"></i>
-                            <?= date('M j, Y', strtotime($proj['Date_Created'])) ?>
-                        </p>
-                        <p><?= nl2br(htmlspecialchars($proj['Description'])) ?></p>
-
-                        <?php if ($proj['Screenshot_Path']): ?>
-                            <img src="<?= htmlspecialchars($proj['Screenshot_Path']) ?>"
-                                 alt="<?= htmlspecialchars($proj['Project_Title']) ?> screenshot"
-                                 class="img-fluid rounded-3 mb-2">
-                        <?php endif; ?>
-
-                        <?php if ($proj['Project_Link']): ?>
-                            <p class="mb-0">
-                                <a href="<?= htmlspecialchars($proj['Project_Link']) ?>"
-                                   target="_blank" rel="noopener">
-                                    <i class="bi bi-box-arrow-up-right me-1"></i>View Project →
-                                </a>
-                            </p>
-                        <?php endif; ?>
+            <!-- Add Project Form -->
+            <div class="form-dark">
+                <h5 class="mb-3 fw-semibold">
+                    <i class="bi bi-plus-square me-2"></i>Add New Project
+                </h5>
+                <form action="Upload_Project.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="projectTitle" class="form-label">Project Title</label>
+                        <input type="text" id="projectTitle" name="title"
+                               class="form-control" placeholder="Project Title" required>
                     </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p class="text-muted fst-italic">No projects added yet.</p>
-            <?php endif; ?>
-        </div>
+                    <div class="mb-3">
+                        <label for="projectDesc" class="form-label">Description</label>
+                        <textarea id="projectDesc" name="description"
+                                  class="form-control" rows="4"
+                                  placeholder="Project Description" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectScreenshot" class="form-label">Screenshot</label>
+                        <input type="file" id="projectScreenshot" name="screenshot"
+                               class="form-control" accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectLink" class="form-label">Live / GitHub Link</label>
+                        <input type="url" id="projectLink" name="link"
+                               class="form-control" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="action-button">
+                        <i class="bi bi-plus-circle me-1"></i> Add Project
+                    </button>
+                </form>
+            </div>
+
+            <!-- Project List -->
+            <div class="project-list mt-3">
+                <?php if ($projects && $projects->num_rows > 0): ?>
+                    <?php while ($proj = $projects->fetch_assoc()): ?>
+                        <div class="project-item">
+                            <h4><?= htmlspecialchars($proj['Project_Title']) ?></h4>
+                            <p class="text-muted small mb-2">
+                                <i class="bi bi-calendar3 me-1"></i>
+                                <?= date('M j, Y', strtotime($proj['Date_Created'])) ?>
+                            </p>
+                            <p><?= nl2br(htmlspecialchars($proj['Description'])) ?></p>
+
+                            <?php if ($proj['Screenshot_Path']): ?>
+                                <img src="<?= htmlspecialchars($proj['Screenshot_Path']) ?>"
+                                     alt="<?= htmlspecialchars($proj['Project_Title']) ?> screenshot"
+                                     class="img-fluid rounded-3 mb-2">
+                            <?php endif; ?>
+
+                            <?php if ($proj['Project_Link']): ?>
+                                <p class="mb-0">
+                                    <a href="<?= htmlspecialchars($proj['Project_Link']) ?>"
+                                       target="_blank" rel="noopener">
+                                        <i class="bi bi-box-arrow-up-right me-1"></i>View Project →
+                                    </a>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p class="text-muted fst-italic">No projects added yet.</p>
+                <?php endif; ?>
+            </div>
+        </section>
 
     </main><!-- /main-content -->
 
@@ -358,5 +430,25 @@ $conn->close();
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <!-- Custom JS -->
     <script src="script.js"></script>
+    <script>
+        const btn     = document.getElementById('hamburgerBtn');
+        const nav     = document.getElementById('hamburgerNav');
+        const tray    = document.getElementById('navTray');
+
+        btn.addEventListener('click', () => {
+            const open = nav.classList.toggle('nav-open');
+            btn.setAttribute('aria-expanded', open);
+            btn.classList.toggle('is-open', open);
+        });
+
+        // Close tray when a nav link is clicked
+        tray.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                nav.classList.remove('nav-open');
+                btn.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
 </body>
 </html>
