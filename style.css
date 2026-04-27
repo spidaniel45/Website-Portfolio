@@ -23,6 +23,7 @@
     --radius-card:  15px;
     --radius-btn:   50px;
     --sidebar-w:    300px;
+    --nav-h:        96px; /* height reserved for the sticky hamburger nav */
 }
 
 /* ── Base ─────────────────────────────────────────────────────── */
@@ -38,7 +39,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--brand-dark); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--brand-light); }
 
-/* ── Sidebar / Header ─────────────────────────────────────────── */
+/* ── Sidebar / Header — fixed so it never scrolls away ───────── */
 .Header {
     display: flex;
     flex-direction: column;
@@ -50,6 +51,7 @@ body {
     padding: 30px 20px;
     margin: 20px;
     width: var(--sidebar-w);
+    /* Fixed: stays put while the rest of the page scrolls */
     position: fixed;
     top: 0;
     left: 0;
@@ -57,6 +59,8 @@ body {
     overflow-y: auto;
     z-index: 100;
     transition: transform var(--transition);
+    /* Prevent the sidebar itself from being part of the scroll flow */
+    flex-shrink: 0;
 }
 
 .circle-pic {
@@ -110,11 +114,13 @@ body {
     background: rgba(255,107,107,0.08);
 }
 
-/* ── Main Content ─────────────────────────────────────────────── */
+/* ── Main Content — offset left so it doesn't hide under sidebar */
 .main-content {
     margin-left: calc(var(--sidebar-w) + 60px);
     padding: 24px 24px 48px;
     min-height: 100vh;
+    /* Ensure this is the scrollable area, not the body */
+    overflow-y: auto;
 }
 
 /* ── Cards / Sections ─────────────────────────────────────────── */
@@ -125,14 +131,20 @@ body {
     color: var(--text-primary);
 }
 
-/* ── Hamburger Nav Container ──────────────────────────────────── */
+/* ── Hamburger Nav Container — fixed at top of main content ──── */
 .hamburger-nav {
     display: flex;
     align-items: center;
     gap: 0;
+    /* Sticky: stays at the top of the scrollable main-content area */
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    /* Give it a background so content doesn't bleed through */
+    background-color: var(--surface-2);
+    padding: 12px 0;
     margin-bottom: 1.5rem;
-    position: relative;
-    height: 72px;
+    height: var(--nav-h);
 }
 
 /* Hamburger button */
@@ -182,7 +194,6 @@ body {
     margin: 0;
     padding: 0 0 0 12px;
     align-items: center;
-    /* Hidden state: collapsed to zero width, clipped */
     max-width: 0;
     overflow: hidden;
     transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -478,6 +489,12 @@ body {
     line-height: 1;
 }
 
+/* ── Skills section — category labels always white ───────────── */
+#skills .text-muted,
+#skills .text-uppercase {
+    color: #ffffff !important;
+}
+
 /* ── Project Cards ────────────────────────────────────────────── */
 .project-list { margin-top: 20px; }
 .project-item {
@@ -497,6 +514,11 @@ body {
 .project-item img { max-width: 100%; border-radius: 8px; margin: 10px 0; }
 .project-item a { color: #2196F3; text-decoration: none; }
 .project-item a:hover { text-decoration: underline; }
+
+/* Project date label — always white ──────────────────────────── */
+.project-item .text-muted {
+    color: #ffffff !important;
+}
 
 /* ── Content Sections ─────────────────────────────────────────── */
 .content-section {
@@ -550,6 +572,11 @@ body {
     }
     .main-content {
         margin-left: 0;
+        overflow-y: unset;
     }
     body { flex-direction: column; }
+    .hamburger-nav {
+        position: sticky;
+        top: 0;
+    }
 }

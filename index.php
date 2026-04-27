@@ -98,22 +98,6 @@ if (isset($_GET['delete_project'])) {
     exit();
 }
 
-// ── Feedback message ───────────────────────────────────────────
-if (isset($_GET['project_added'])) {
-    $message = '<i class="bi bi-check-circle-fill me-2"></i>Project added successfully!';
-}
-if (isset($_GET['project_updated'])) {
-    $message = '<i class="bi bi-check-circle-fill me-2"></i>Project updated successfully!';
-}
-if (isset($_GET['project_deleted'])) {
-    $message = '<i class="bi bi-trash-fill me-2"></i>Project deleted.';
-}
-if (isset($_GET['uploaded'])) {
-    $up      = (int) $_GET['uploaded'];
-    $sk      = (int) $_GET['skipped'];
-    $message = "<i class='bi bi-cloud-upload-fill me-2'></i>Uploaded: {$up} file(s). Skipped: {$sk} duplicate(s).";
-}
-
 // ── Fetch profile name ─────────────────────────────────────────
 $nameResult = $conn->query("SELECT CONCAT(First_Name, ' ', Middle_Name, ' ', Last_Name) AS FullName FROM Portfolio_Profile LIMIT 1");
 $fullName   = ($nameResult && $nameResult->num_rows > 0)
@@ -315,6 +299,11 @@ $conn->close();
         line-height: 1;
     }
     .toast-close:hover { opacity: 1; }
+
+    /* ── Fix: project date and skill labels → white ──────────── */
+    .project-item .text-muted {
+        color: #ffffff !important;
+    }
     </style>
 </head>
 <body class="d-flex">
@@ -328,13 +317,13 @@ $conn->close();
     </svg>
 
     <!-- =====================================================
-         SIDEBAR — Profile Card
+         SIDEBAR — Profile Card (fixed position)
          ===================================================== -->
     <aside class="Header">
-        <img src="./uploads/images/profile/profile.jpeg"
+        <img src="./uploads/image/profile/profile.jpg"
              alt="Profile Picture"
              class="circle-pic"
-             onerror="this.onerror=null;this.style.opacity='0.2';">
+             onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Daniel+Evangelista&background=5e2a2a&color=fff&size=120';">
 
         <div class="profile-info">
             <h2><?= htmlspecialchars($fullName) ?></h2>
@@ -361,23 +350,14 @@ $conn->close();
          ===================================================== -->
     <main class="main-content flex-fill">
 
-        <!-- Flash message -->
-        <?php if ($message): ?>
-            <div class="alert alert-brand mb-4" role="alert">
-                <?= $message ?>
-            </div>
-        <?php endif; ?>
-
-        <!-- Hamburger Nav — starts open (nav-open), user clicks ☰ to close -->
+        <!-- Hamburger Nav — fixed at top, starts open -->
         <div class="hamburger-nav nav-open" id="hamburgerNav">
-            <!-- Hamburger toggle button — aria-expanded matches open state -->
             <button class="hamburger-btn is-open" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="true">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
 
-            <!-- Slide-out icon tray -->
             <ul class="top-nav" id="navTray">
                 <li style="--i:0">
                     <a href="#about">
@@ -424,10 +404,6 @@ $conn->close();
                     </a>
                 </li>
                 <li style="--i:4">
-                    <!--
-                        This link opens a Bootstrap modal — it must NOT close the nav tray.
-                        The data-nav-keep attribute tells our JS to skip auto-close for it.
-                    -->
                     <a href="#"
                        data-bs-toggle="modal"
                        data-bs-target="#DownloadModal"
@@ -468,14 +444,7 @@ $conn->close();
                 <span id="projects-live-dot" title="Live — refreshes every 30 s"></span>
             </h2>
 
-            <!--
-                Project list — populated and auto-refreshed by JS.
-                PHP renders the initial payload into a data attribute so
-                the first paint is instant (no extra network round-trip).
-                The poller then re-fetches api/projects.php every 30 s.
-            -->
             <?php
-                // Encode the initial project set for JS bootstrap
                 $initialProjects = [];
                 if ($projects && $projects->num_rows > 0) {
                     while ($p = $projects->fetch_assoc()) {
@@ -485,10 +454,9 @@ $conn->close();
             ?>
             <div id="project-list-container" class="project-list mb-4"
                  data-initial="<?= htmlspecialchars(json_encode($initialProjects, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES) ?>">
-                <!-- JS renders cards here; skeletons shown during each refresh -->
             </div>
 
-            <!-- Add Project Form — below the showcase -->
+            <!-- Add Project Form -->
             <div class="form-dark">
                 <h5 class="mb-3 fw-semibold">
                     <i class="bi bi-plus-square me-2"></i>Add New Project
@@ -522,7 +490,7 @@ $conn->close();
             </div>
         </section>
 
-    </main><!-- /main-content -->
+    </main>
 
 
     <!-- =====================================================
@@ -620,19 +588,16 @@ $conn->close();
     <!-- =====================================================
          SCRIPTS
          ===================================================== -->
-    <!-- Bootstrap 5 JS (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <!-- Custom JS -->
     <script src="script.js"></script>
-    <!-- Toast container (top-right popup notifications) -->
+    <!-- Toast container -->
     <div id="toast-container" aria-live="polite"></div>
 
     <script>
     // ============================================================
-    // HAMBURGER NAV — stays open until user clicks ☰ to close
+    // HAMBURGER NAV
     // ============================================================
     (function () {
         const btn  = document.getElementById('hamburgerBtn');
@@ -654,8 +619,7 @@ $conn->close();
     })();
 
     // ============================================================
-    // TOAST NOTIFICATIONS — top-right popup, auto-dismiss 4 s
-    // Types: 'deleted' | 'updated' | 'added' | 'info'
+    // TOAST NOTIFICATIONS — auto-dismiss 3 s
     // ============================================================
     function showToast(message, type = 'info') {
         const container = document.getElementById('toast-container');
@@ -678,16 +642,14 @@ $conn->close();
 
         container.appendChild(toast);
 
-        // Animate in
         requestAnimationFrame(() => {
             requestAnimationFrame(() => toast.classList.add('show'));
         });
 
-        // Close button
         toast.querySelector('.toast-close').addEventListener('click', () => dismissToast(toast));
 
-        // Auto-dismiss after 4 s
-        setTimeout(() => dismissToast(toast), 4000);
+        // Auto-dismiss after 3 s
+        setTimeout(() => dismissToast(toast), 3000);
     }
 
     function dismissToast(toast) {
@@ -695,7 +657,7 @@ $conn->close();
         toast.addEventListener('transitionend', () => toast.remove(), { once: true });
     }
 
-    // Show toast for PHP flash params (project_deleted, project_added, etc.)
+    // Show toast for PHP flash params — no top banner shown
     (function checkFlash() {
         const params = new URLSearchParams(window.location.search);
         if (params.has('project_deleted')) {
@@ -704,22 +666,20 @@ $conn->close();
             showToast('Project added successfully.', 'added');
         } else if (params.has('project_updated')) {
             showToast('Project updated successfully.', 'updated');
+        } else if (params.has('uploaded')) {
+            const up = parseInt(params.get('uploaded') || '0', 10);
+            const sk = parseInt(params.get('skipped')  || '0', 10);
+            showToast(`Uploaded: ${up} file(s). Skipped: ${sk} duplicate(s).`, 'info');
         }
         // Clean the query string from the URL bar without reloading
-        if (params.has('project_deleted') || params.has('project_added') || params.has('project_updated')) {
-            history.replaceState({}, '', window.location.pathname + '#projects');
+        if (params.has('project_deleted') || params.has('project_added') ||
+            params.has('project_updated') || params.has('uploaded')) {
+            history.replaceState({}, '', window.location.pathname + (params.has('uploaded') ? '' : '#projects'));
         }
     })();
 
     // ============================================================
-    // PROJECTS — Snipzy-style skeleton + auto-refresh every 30 s
-    //
-    // Flow:
-    //  1. DOMContentLoaded → read PHP inline data → render instantly.
-    //  2. Every 30 s → show skeletons → fetch api/projects.php →
-    //     compare hash → rebuild DOM only when data changed →
-    //     show toast if count changed.
-    //  3. Tab hidden → pause poll. Tab visible → immediate refresh.
+    // PROJECTS — Skeleton + auto-refresh every 30 s
     // ============================================================
     (function () {
         const container = document.getElementById('project-list-container');
@@ -728,7 +688,6 @@ $conn->close();
         let lastCount   = 0;
         let pollTimer   = null;
 
-        // ── Snipzy skeleton card (image-first layout) ───────────
         function skeletonCard() {
             return `
             <div class="skeleton-card" aria-hidden="true">
@@ -754,7 +713,6 @@ $conn->close();
                 '</div>';
         }
 
-        // ── Build a real project card ────────────────────────────
         function buildCard(p) {
             const title   = escHtml(p.Project_Title ?? '');
             const desc    = escHtml(p.Description   ?? '').replace(/\n/g, '<br>');
@@ -800,7 +758,6 @@ $conn->close();
             </div>`;
         }
 
-        // ── Render real cards into the container ─────────────────
         function renderProjects(projects) {
             if (!projects || projects.length === 0) {
                 container.innerHTML =
@@ -810,7 +767,6 @@ $conn->close();
             container.innerHTML = projects.map(buildCard).join('');
         }
 
-        // ── Fetch + diff + update ────────────────────────────────
         async function fetchProjects(silent = false) {
             const currentCount = lastCount || 2;
             if (!silent) showSkeletons(currentCount);
@@ -823,7 +779,6 @@ $conn->close();
                 const newCount = (data.projects || []).length;
 
                 if (data.hash !== lastHash) {
-                    // Something changed — figure out what to tell the user
                     if (lastHash !== '') {
                         if (newCount > lastCount) {
                             showToast(`New project added! (${newCount} total)`, 'added');
@@ -837,17 +792,14 @@ $conn->close();
                     lastCount = newCount;
                     renderProjects(data.projects);
                 } else {
-                    // No change — just remove skeletons, restore cards quietly
                     renderProjects(data.projects);
                 }
             } catch (err) {
                 console.warn('[projects] Fetch failed:', err);
-                // Re-render from last known state if we have it
                 if (lastHash) renderProjects([]);
             }
         }
 
-        // ── Utility: HTML escape ─────────────────────────────────
         function escHtml(str) {
             return String(str)
                 .replace(/&/g,  '&amp;')
@@ -857,7 +809,6 @@ $conn->close();
                 .replace(/'/g,  '&#39;');
         }
 
-        // ── Utility: "Apr 26, 2026" from MySQL datetime ──────────
         function formatDate(raw) {
             if (!raw) return '';
             const d = new Date(raw.replace(' ', 'T'));
@@ -866,7 +817,6 @@ $conn->close();
             });
         }
 
-        // ── djb2 hash to seed lastHash from inline PHP data ──────
         function djb2(str) {
             let h = 5381;
             for (let i = 0; i < str.length; i++) {
@@ -875,7 +825,6 @@ $conn->close();
             return (h >>> 0).toString(16);
         }
 
-        // ── Init: paint from PHP inline data immediately ─────────
         function init() {
             try {
                 const initial = JSON.parse(container.dataset.initial || '[]');
@@ -889,7 +838,6 @@ $conn->close();
             pollTimer = setInterval(fetchProjects, POLL_MS);
         }
 
-        // ── Pause polling when tab is hidden ─────────────────────
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 clearInterval(pollTimer);
