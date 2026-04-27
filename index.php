@@ -350,7 +350,7 @@ $conn->close();
          ===================================================== -->
     <main class="main-content flex-fill">
 
-        <!-- Hamburger Nav — fixed at top, starts open -->
+        <!-- Hamburger Nav — sticky at top at all times -->
         <div class="hamburger-nav nav-open" id="hamburgerNav">
             <button class="hamburger-btn is-open" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="true">
                 <span class="bar"></span>
@@ -441,7 +441,7 @@ $conn->close();
         <section id="projects" class="content-section">
             <h2 class="fw-bold mb-4">
                 <i class="bi bi-code-slash me-2"></i>My Projects
-                <span id="projects-live-dot" title="Live — refreshes every 30 s"></span>
+                <span id="projects-live-dot" title="Live — refreshes when changes detected"></span>
             </h2>
 
             <?php
@@ -679,15 +679,20 @@ $conn->close();
     })();
 
     // ============================================================
-    // PROJECTS — Skeleton + auto-refresh every 30 s
+    // PROJECTS — Change-detection refresh
+    //
+    // Strategy:
+    //   • On page load: render from PHP-injected data immediately (no flash).
+    //   • On tab focus (visibilitychange → visible): silently fetch api/projects.php
+    //     and compare the hash. Re-render ONLY if the hash changed.
+    //   • No setInterval — zero background polling when nothing changes.
     // ============================================================
     (function () {
         const container = document.getElementById('project-list-container');
-        const POLL_MS   = 30_000;
-        let lastHash    = '';
-        let lastCount   = 0;
-        let pollTimer   = null;
+        let lastHash  = '';
+        let lastCount = 0;
 
+        // ── Skeleton helpers ──────────────────────────────────
         function skeletonCard() {
             return `
             <div class="skeleton-card" aria-hidden="true">
@@ -713,6 +718,7 @@ $conn->close();
                 '</div>';
         }
 
+        // ── Card builder ──────────────────────────────────────
         function buildCard(p) {
             const title   = escHtml(p.Project_Title ?? '');
             const desc    = escHtml(p.Description   ?? '').replace(/\n/g, '<br>');
@@ -767,10 +773,8 @@ $conn->close();
             container.innerHTML = projects.map(buildCard).join('');
         }
 
-        async function fetchProjects(silent = false) {
-            const currentCount = lastCount || 2;
-            if (!silent) showSkeletons(currentCount);
-
+        // ── Fetch & diff — only re-render on hash change ──────
+        async function fetchAndDiff() {
             try {
                 const res  = await fetch('api/projects.php', { cache: 'no-store' });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -779,6 +783,7 @@ $conn->close();
                 const newCount = (data.projects || []).length;
 
                 if (data.hash !== lastHash) {
+                    // Something changed — notify and re-render
                     if (lastHash !== '') {
                         if (newCount > lastCount) {
                             showToast(`New project added! (${newCount} total)`, 'added');
@@ -791,15 +796,14 @@ $conn->close();
                     lastHash  = data.hash;
                     lastCount = newCount;
                     renderProjects(data.projects);
-                } else {
-                    renderProjects(data.projects);
                 }
+                // Hash unchanged → DOM is already up to date, do nothing
             } catch (err) {
                 console.warn('[projects] Fetch failed:', err);
-                if (lastHash) renderProjects([]);
             }
         }
 
+        // ── Utility ───────────────────────────────────────────
         function escHtml(str) {
             return String(str)
                 .replace(/&/g,  '&amp;')
@@ -825,6 +829,7 @@ $conn->close();
             return (h >>> 0).toString(16);
         }
 
+        // ── Init — render PHP data immediately, seed hash ─────
         function init() {
             try {
                 const initial = JSON.parse(container.dataset.initial || '[]');
@@ -832,18 +837,22 @@ $conn->close();
                 lastHash  = djb2(initial.map(p => p.ID + p.Project_Title).join('|'));
                 renderProjects(initial);
             } catch (e) {
-                fetchProjects();
+                // Fallback: fetch fresh if JSON parse fails
+                showSkeletons(2);
+                fetchAndDiff();
                 return;
             }
-            pollTimer = setInterval(fetchProjects, POLL_MS);
+
+            // One silent server check on load to align hash with live DB
+            // (catches changes made while the page was closed)
+            fetchAndDiff();
         }
 
+        // ── Visibility change — check for changes on tab focus ─
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                clearInterval(pollTimer);
-            } else {
-                fetchProjects();
-                pollTimer = setInterval(fetchProjects, POLL_MS);
+            if (!document.hidden) {
+                // Tab became active again — silently check for changes
+                fetchAndDiff();
             }
         });
 

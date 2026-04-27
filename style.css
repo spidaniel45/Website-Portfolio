@@ -119,8 +119,9 @@ body {
     margin-left: calc(var(--sidebar-w) + 60px);
     padding: 24px 24px 48px;
     min-height: 100vh;
-    /* Ensure this is the scrollable area, not the body */
-    overflow-y: auto;
+    /* NOTE: overflow-y intentionally NOT set here.
+       Sticky positioning on .hamburger-nav requires the scroll
+       container to be the window/body, not this element. */
 }
 
 /* ── Cards / Sections ─────────────────────────────────────────── */
@@ -131,16 +132,16 @@ body {
     color: var(--text-primary);
 }
 
-/* ── Hamburger Nav Container — fixed at top of main content ──── */
+/* ── Hamburger Nav Container — sticky at top of viewport ─────── */
 .hamburger-nav {
     display: flex;
     align-items: center;
     gap: 0;
-    /* Sticky: stays at the top of the scrollable main-content area */
+    /* Sticky: scrolls with content but locks to top of viewport */
     position: sticky;
     top: 0;
     z-index: 50;
-    /* Give it a background so content doesn't bleed through */
+    /* Solid background so content doesn't bleed through when stuck */
     background-color: var(--surface-2);
     padding: 12px 0;
     margin-bottom: 1.5rem;
@@ -572,7 +573,6 @@ body {
     }
     .main-content {
         margin-left: 0;
-        overflow-y: unset;
     }
     body { flex-direction: column; }
     .hamburger-nav {
