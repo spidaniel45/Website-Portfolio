@@ -69,6 +69,7 @@ if (isset($_GET['uploaded'])) {
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-person"></i>
+                            <span>About</span>
                         </div>
                     </a>
                 </li>
@@ -79,6 +80,7 @@ if (isset($_GET['uploaded'])) {
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-tools"></i>
+                            <span>Skills</span>
                         </div>
                     </a>
                 </li>
@@ -92,6 +94,7 @@ if (isset($_GET['uploaded'])) {
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-folder2-open"></i>
+                            <span>Docs</span>
                         </div>
                     </a>
                 </li>
@@ -113,6 +116,7 @@ if (isset($_GET['uploaded'])) {
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-github"></i>
+                            <span>GitHub</span>
                         </div>
                     </a>
                 </li>

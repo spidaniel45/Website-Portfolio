@@ -108,7 +108,7 @@ $fullName   = ($nameResult && $nameResult->num_rows > 0)
 $projects = $conn->query("SELECT * FROM Portfolio_Projects ORDER BY Date_Created DESC");
 
 // ── Fetch documents ────────────────────────────────────────────
-$documents = $conn->query("SELECT ID, File_Name, File_Path FROM Portfolio_Documents ORDER BY ID DESC");
+$documents = $conn->query("SELECT File_Name, File_Path FROM Portfolio_Documents ORDER BY ID DESC");
 
 $conn->close();
 ?>
@@ -366,6 +366,7 @@ $conn->close();
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-house-door"></i>
+                            <span>Home</span>
                         </div>
                     </a>
                 </li>
@@ -376,6 +377,7 @@ $conn->close();
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-person"></i>
+                            <span>About</span>
                         </div>
                     </a>
                 </li>
@@ -386,6 +388,7 @@ $conn->close();
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-tools"></i>
+                            <span>Skills</span>
                         </div>
                     </a>
                 </li>
@@ -396,6 +399,7 @@ $conn->close();
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-github"></i>
+                            <span>GitHub</span>
                         </div>
                     </a>
                 </li>
@@ -406,6 +410,7 @@ $conn->close();
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-code-slash"></i>
+                            <span>Projects</span>
                         </div>
                     </a>
                 </li>
@@ -420,6 +425,7 @@ $conn->close();
                         <div class="glass-specular"></div>
                         <div class="glass-content">
                             <i class="bi bi-folder2-open"></i>
+                            <span>Docs</span>
                         </div>
                     </a>
                 </li>
@@ -506,40 +512,21 @@ $conn->close();
                     <div class="documents-list">
                         <?php if ($documents && $documents->num_rows > 0): ?>
                             <?php while ($doc = $documents->fetch_assoc()): ?>
-                                <div class="document-item" style="position: relative; padding: 8px;">
-                                    <p style="display: flex; align-items: center; height: 36px; margin: 0;">
+                                <div class="document-item">
+                                    <p>
                                         <i class="bi bi-file-earmark me-1"></i>
                                         <?= htmlspecialchars($doc['File_Name']) ?>
                                     </p>
-                                    <div class="document-actions" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%);">
-                                        <a class="view-link"
-                                           href="<?= htmlspecialchars($doc['File_Path']) ?>"
-                                           target="_blank"
-                                           rel="noopener"
-                                           style="background: var(--surface-1); border: 3px solid var(--brand-dark); border-radius: 6px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 8px;">
-                                            <i class="bi bi-eye" style="color: white;"></i>
-                                        </a>
+                                    <div class="document-actions">
                                         <a class="download-link"
                                            href="<?= htmlspecialchars($doc['File_Path']) ?>"
-                                           download
-                                           style="background: var(--surface-1); border: 3px solid var(--brand-dark); border-radius: 6px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 8px;">
-                                            <i class="bi bi-download" style="color: white;"></i>
-                                        </a>
-                                        <a class="edit-link"
-                                           href="#"
-                                           data-bs-toggle="modal"
-                                           data-bs-target="#EditModal"
-                                           data-doc-id="<?= $doc['ID'] ?>"
-                                           data-doc-name="<?= htmlspecialchars($doc['File_Name']) ?>"
-                                           data-doc-path="<?= htmlspecialchars($doc['File_Path']) ?>"
-                                           style="background: var(--surface-1); border: 3px solid var(--brand-dark); border-radius: 6px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 8px;">
-                                            <i class="bi bi-pencil" style="color: white;"></i>
+                                           download>
+                                            <i class="bi bi-download me-1"></i>Download
                                         </a>
                                         <a class="delete-link"
                                            href="?delete=<?= urlencode($doc['File_Name']) ?>"
-                                           onclick="return confirm('Delete this file?')"
-                                           style="background: var(--surface-1); border: 3px solid var(--brand-dark); border-radius: 6px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 8px;">
-                                            <i class="bi bi-trash" style="color: white;"></i>
+                                           onclick="return confirm('Delete this file?')">
+                                            <i class="bi bi-trash me-1"></i>Delete
                                         </a>
                                     </div>
                                 </div>
@@ -600,74 +587,14 @@ $conn->close();
         </div>
     </div>
 
-<!-- =====================================================
-     MODAL — Edit Document
-     ===================================================== -->
-<div id="EditModal" class="fade modal modal-dark" tabindex="-1"
-     aria-labelledby="EditModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="EditModalLabel">
-                    <i class="bi bi-pencil me-2"></i>Edit Document
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="action" value="updatedoc">
-                    <input type="hidden" name="doc_id" id="editDocId">
-                    <div class="mb-3">
-                        <label class="form-label">Current File</label>
-                        <p class="form-control-plaintext" id="editCurrentFile"></p>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">New File (optional)</label>
-                        <input type="file"
-                               name="document[]"
-                               class="form-control"
-                               accept=".pdf,.doc,.docx,.txt">
-                    </div>
-                    <button type="submit" class="action-button w-100">
-                        <i class="bi bi-upload me-1"></i>Save Changes
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- =====================================================
+    <!-- =====================================================
          SCRIPTS
          ===================================================== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="script.js"></script>
-    <script>
-        // Edit document modal
-        const editModal = document.getElementById('editModal');
-        if (editModal) {
-            editModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget; // Button that triggered the modal
-                const docId = button.getAttribute('data-doc-id');
-                const docName = button.getAttribute('data-doc-name');
-                const docPath = button.getAttribute('data-doc-path');
-                // Populate fields
-                editModal.querySelector('#editDocId').value = docId;
-                editModal.querySelector('#editCurrentFile').textContent = docName;
-                // Reset file input
-                editModal.querySelector('input[type="file"]').value = '';
-            });
-        }
-    </script>
-    <script>
-// Redirect to #home if hash is not #home
-if (location.hash !== '#home') {
-    location.hash = '#home';
-}
-</script>
-<!-- Toast container -->
+    <!-- Toast container -->
     <div id="toast-container" aria-live="polite"></div>
 
     <script>

@@ -11,7 +11,7 @@
 
     .about-category {
         background: var(--surface-2);
-        border: 3px solid var(--brand-dark);
+        border: 2px solid var(--brand-dark);
         border-radius: 12px;
         padding: 16px 18px 18px;
         transition: border-color 0.3s ease;
@@ -122,7 +122,8 @@
                         <span class="about-detail-value">Next.js/TypeScript development, QA workflow ownership, Laravel database migrations, team collaboration through code reviews</span>
                     </div>
                 </div>
-                                <div class="job-group muzon-school">
+                <div class="experience-divider"></div>
+                <div class="job-group muzon-school">
                     <div class="about-details-item">
                         <span class="about-detail-label">Position</span>
                         <span class="about-detail-value">Work Immersion Internship</span>

@@ -86,158 +86,187 @@
     }
     </style>
 
-    <div class="skills-grid">
-
-        <!-- Front-End -->
-        <div class="skill-category">
-            <div class="skill-category-label">
-                <i class="bi bi-layout-text-window-reverse"></i> Front-End
+<div class="skills-grid">
+    <!-- Programming Languages -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-code-slash"></i> Programming Languages
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="devicon-html5-plain colored"></i>
+                <span>HTML</span>
             </div>
-            <div class="badge-row">
-                <div class="tech-badge">
-                    <i class="devicon-html5-plain colored"></i>
-                    <span>HTML5</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-css3-plain colored"></i>
-                    <span>CSS3</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-javascript-plain colored"></i>
-                    <span>JavaScript</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-bootstrap-plain colored"></i>
-                    <span>Bootstrap</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-react-original colored"></i>
-                    <span>React</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-tailwindcss-plain colored"></i>
-                    <span>Tailwind</span>
-                </div>
+            <div class="tech-badge">
+                <i class="devicon-css3-plain colored"></i>
+                <span>CSS</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-javascript-plain colored"></i>
+                <span>JavaScript</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-typescript-plain colored"></i>
+                <span>TypeScript</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-php-plain colored"></i>
+                <span>PHP</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-mysql-plain colored"></i>
+                <span>SQL</span>
             </div>
         </div>
-
-        <!-- Back-End -->
-        <div class="skill-category">
-            <div class="skill-category-label">
-                <i class="bi bi-server"></i> Back-End
-            </div>
-            <div class="badge-row">
-                <div class="tech-badge">
-                    <i class="devicon-php-plain colored"></i>
-                    <span>PHP</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-laravel-plain colored"></i>
-                    <span>Laravel</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-java-plain colored"></i>
-                    <span>Java</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-python-plain colored"></i>
-                    <span>Python</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Database -->
-        <div class="skill-category">
-            <div class="skill-category-label">
-                <i class="bi bi-database"></i> Database
-            </div>
-            <div class="badge-row">
-                <div class="tech-badge">
-                    <i class="devicon-mysql-plain colored"></i>
-                    <span>MySQL</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Version Control -->
-        <div class="skill-category">
-            <div class="skill-category-label">
-                <i class="bi bi-git"></i> Version Control
-            </div>
-            <div class="badge-row">
-                <div class="tech-badge">
-                    <i class="devicon-git-plain colored"></i>
-                    <span>Git</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-github-original" style="color:#ffffff;"></i>
-                    <span>GitHub</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dev Tools -->
-        <div class="skill-category">
-            <div class="skill-category-label">
-                <i class="bi bi-terminal"></i> Dev Tools
-            </div>
-            <div class="badge-row">
-                <div class="tech-badge">
-                    <i class="devicon-vscode-plain colored"></i>
-                    <span>VS Code</span>
-                </div>
-                <div class="tech-badge">
-                    <i class="devicon-xampp-plain colored"></i>
-                    <span>XAMPP</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Tools -->
-        <div class="skill-category">
-            <div class="skill-category-label">
-                <i class="bi bi-stars"></i> AI Tools
-            </div>
-            <div class="badge-row">
-
-                <!-- Claude -->
-                <div class="tech-badge">
-                    <img class="ai-logo"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Claude_AI_logo.svg/512px-Claude_AI_logo.svg.png"
-                         alt="Claude"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-                    ><i class="bi bi-robot" style="display:none;font-size:1.9rem;color:#d97757;"></i>
-                    <span>Claude</span>
-                </div>
-
-                <!-- Cursor -->
-                <div class="tech-badge">
-                    <img class="ai-logo"
-                         src="https://www.cursor.com/favicon.ico"
-                         alt="Cursor"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-                    ><i class="bi bi-cursor-fill" style="display:none;font-size:1.9rem;color:#ffffff;"></i>
-                    <span>Cursor</span>
-                </div>
-
-                <!-- GitHub Copilot -->
-                <div class="tech-badge">
-                    <i class="devicon-githubcopilot-plain" style="color:#ffffff;font-size:1.9rem;"></i>
-                    <span>Copilot</span>
-                </div>
-
-                <!-- ChatGPT -->
-                <div class="tech-badge">
-                    <img class="ai-logo"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png"
-                         alt="ChatGPT"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-                    ><i class="bi bi-chat-dots-fill" style="display:none;font-size:1.9rem;color:#10a37f;"></i>
-                    <span>ChatGPT</span>
-                </div>
-
-            </div>
-        </div>
-
     </div>
+
+    <!-- Full-Stack & Frontend Frameworks -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-diagram-3"></i> Full-Stack & Frontend Frameworks
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="devicon-laravel-original colored"></i>
+                <span>Laravel</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-nextjs-plain colored"></i>
+                <span>Next.js</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-react-original colored"></i>
+                <span>React</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-vuejs-plain colored"></i>
+                <span>Vue.js</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backend & Runtimes -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-box-arrow-in-right"></i> Backend & Runtimes
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="devicon-nodejs-plain colored"></i>
+                <span>Node.js</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSS Frameworks -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-border-all"></i> CSS Frameworks
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="devicon-tailwindcss-plain colored"></i>
+                <span>Tailwind</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-bootstrap-plain colored"></i>
+                <span>Bootstrap</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Gateways & APIs -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-card-checklist"></i> Payment Gateways & APIs
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="bi bi-card-checklist"></i>
+                <span>PayMongo Sandbox</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Databases & Cloud Platforms -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-database"></i> Databases & Cloud Platforms
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="devicon-mysql-plain colored"></i>
+                <span>MySQL</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-mariadb-plain colored"></i>
+                <span>MariaDB</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-supabase-plain colored"></i>
+                <span>Supabase</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer Tools -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-tools"></i> Developer Tools
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <i class="devicon-vscode-plain colored"></i>
+                <span>VS Code</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-git-plain colored"></i>
+                <span>Git</span>
+            </div>
+            <div class="tech-badge">
+                <i class="devicon-github-original" style="color:#ffffff;"></i>
+                <span>GitHub</span>
+            </div>
+            <div class="tech-badge">
+                <img class="ai-logo"
+                     src="https://simpleicons.org/icons/jira.svg"
+                     alt="Jira">
+                <span>Jira</span>
+            </div>
+            <div class="tech-badge">
+                <img class="ai-logo"
+                     src="https://www.zoho.com/favicon.ico"
+                     alt="Zoho">
+                <span>Zoho</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI-Assisted Dev -->
+    <div class="skill-category">
+        <div class="skill-category-label">
+            <i class="bi bi-robot"></i> AI-Assisted Dev
+        </div>
+        <div class="badge-row">
+            <div class="tech-badge">
+                <img class="ai-logo"
+                     src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg"
+                     alt="Claude">
+                <span>Claude Code</span>
+            </div>
+            <div class="tech-badge">
+                <img class="ai-logo"
+                     src="https://www.cursor.com/favicon.ico"
+                     alt="Cursor">
+                <span>Cursor</span>
+            </div>
+            <div class="tech-badge">
+                <img class="ai-logo"
+                     src="https://coderabbit.ai/favicon.ico"
+                     alt="CodeRabbit">
+                <span>CodeRabbit</span>
+            </div>
+        </div>
+    </div>
+</div>
 </section>
