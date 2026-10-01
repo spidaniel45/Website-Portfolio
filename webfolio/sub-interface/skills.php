@@ -95,27 +95,21 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="devicon-html5-plain colored"></i>
-                <span>HTML</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-css3-plain colored"></i>
-                <span>CSS</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-javascript-plain colored"></i>
-                <span>JavaScript</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-typescript-plain colored"></i>
-                <span>TypeScript</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-php-plain colored"></i>
-                <span>PHP</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-mysql-plain colored"></i>
-                <span>SQL</span>
             </div>
         </div>
     </div>
@@ -128,19 +122,15 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="devicon-laravel-original colored"></i>
-                <span>Laravel</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-nextjs-plain colored"></i>
-                <span>Next.js</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-react-original colored"></i>
-                <span>React</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-vuejs-plain colored"></i>
-                <span>Vue.js</span>
             </div>
         </div>
     </div>
@@ -153,7 +143,6 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="devicon-nodejs-plain colored"></i>
-                <span>Node.js</span>
             </div>
         </div>
     </div>
@@ -166,11 +155,9 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="devicon-tailwindcss-plain colored"></i>
-                <span>Tailwind</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-bootstrap-plain colored"></i>
-                <span>Bootstrap</span>
             </div>
         </div>
     </div>
@@ -183,7 +170,6 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="bi bi-card-checklist"></i>
-                <span>PayMongo Sandbox</span>
             </div>
         </div>
     </div>
@@ -196,15 +182,12 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="devicon-mysql-plain colored"></i>
-                <span>MySQL</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-mariadb-plain colored"></i>
-                <span>MariaDB</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-supabase-plain colored"></i>
-                <span>Supabase</span>
             </div>
         </div>
     </div>
@@ -217,27 +200,22 @@
         <div class="badge-row">
             <div class="tech-badge">
                 <i class="devicon-vscode-plain colored"></i>
-                <span>VS Code</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-git-plain colored"></i>
-                <span>Git</span>
             </div>
             <div class="tech-badge">
                 <i class="devicon-github-original" style="color:#ffffff;"></i>
-                <span>GitHub</span>
             </div>
             <div class="tech-badge">
                 <img class="ai-logo"
                      src="https://simpleicons.org/icons/jira.svg"
                      alt="Jira">
-                <span>Jira</span>
             </div>
             <div class="tech-badge">
                 <img class="ai-logo"
                      src="https://www.zoho.com/favicon.ico"
                      alt="Zoho">
-                <span>Zoho</span>
             </div>
         </div>
     </div>
@@ -252,19 +230,16 @@
                 <img class="ai-logo"
                      src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg"
                      alt="Claude">
-                <span>Claude Code</span>
             </div>
             <div class="tech-badge">
                 <img class="ai-logo"
                      src="https://www.cursor.com/favicon.ico"
                      alt="Cursor">
-                <span>Cursor</span>
             </div>
             <div class="tech-badge">
                 <img class="ai-logo"
                      src="https://coderabbit.ai/favicon.ico"
                      alt="CodeRabbit">
-                <span>CodeRabbit</span>
             </div>
         </div>
     </div>

@@ -90,7 +90,7 @@
         <div class="experience-item">
             <div class="experience-header">
                 <div class="experience-title">Software Engineer Intern</div>
-                <div class="experience-date">November 2025 - August 2026</div>
+                <div class="experience-date">October 2025 - August 2026</div>
             </div>
             <div class="experience-company">Argon Software</div>
             <div class="experience-description">
