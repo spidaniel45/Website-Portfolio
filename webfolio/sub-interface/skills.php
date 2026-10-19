@@ -124,7 +124,7 @@
                 <i class="devicon-laravel-original colored"></i>
             </div>
             <div class="tech-badge">
-                <i class="devicon-nextjs-plain colored"></i>
+                <i class="devicon-nextjs-plain" style="color: #0070f3;"></i>
             </div>
             <div class="tech-badge">
                 <i class="devicon-react-original colored"></i>

@@ -107,6 +107,25 @@
                 <div class="job-group argon-software">
                     <div class="about-details-item">
                         <span class="about-detail-label">Position</span>
+                        <span class="about-detail-value">Pre-Service Teacher</span>
+                    </div>
+                    <div class="about-details-item">
+                        <span class="about-detail-label">School</span>
+                        <span class="about-detail-value">Manggahan High School</span>
+                    </div>
+                    <div class="about-details-item">
+                        <span class="about-detail-label">Period</span>
+                        <span class="about-detail-value">September 2026 - Present</span>
+                    </div>
+                    <div class="about-details-item">
+                        <span class="about-detail-label">Key Responsibilities</span>
+                        <span class="about-detail-value">Delivered hands-on front-end web development instruction in semantic HTML5 and CSS, mentoring students in engineering best practices, collaborative troubleshooting, and the end-to-end development of a custom website for Manggahan High School</span>
+                    </div>
+                </div>
+            <div class="about-details">
+                <div class="job-group argon-software">
+                    <div class="about-details-item">
+                        <span class="about-detail-label">Position</span>
                         <span class="about-detail-value">Software Engineer Intern</span>
                     </div>
                     <div class="about-details-item">
@@ -115,14 +134,14 @@
                     </div>
                     <div class="about-details-item">
                         <span class="about-detail-label">Period</span>
-                        <span class="about-detail-value">November 2025 - August 2026</span>
+                        <span class="about-detail-value">October 2025 - August 2026</span>
                     </div>
                     <div class="about-details-item">
                         <span class="about-detail-label">Key Responsibilities</span>
                         <span class="about-detail-value">Next.js/TypeScript development, QA workflow ownership, Laravel database migrations, team collaboration through code reviews</span>
                     </div>
                 </div>
-                                <div class="job-group muzon-school">
+                <div class="job-group muzon-school">
                     <div class="about-details-item">
                         <span class="about-detail-label">Position</span>
                         <span class="about-detail-value">Work Immersion Internship</span>
@@ -142,8 +161,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Certifications -->
+    </div>
+    <!-- Certifications -->
         <div class="about-category">
             <div class="about-category-label">
                 <i class="bi bi-award"></i>
